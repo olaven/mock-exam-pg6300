@@ -23,5 +23,6 @@
   * JSON-format does not support comments. `package.json`is copied from [this file](https://github.com/arcuri82/web_development_and_api_design/blob/master/exercise-solutions/quiz-game/part-10/package.json)
 * dependencies not used in course
   * [eslint](https://yarnpkg.com/en/package/eslint) and related plugins. This is to create lint-config appropriate for the project (like support for React)
+  * [nanoid](https://www.npmjs.com/package/nanoid) is used for generating random IDs. The library was updated recently, takes minimal amount of space, and has 700k weekly downloads.  
 * on general style 
   * I could have written some functional components. In particular, the components not having state. However, I stuck with class based components for the sake of consistency. 

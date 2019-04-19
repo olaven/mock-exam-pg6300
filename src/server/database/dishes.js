@@ -6,7 +6,7 @@ const { addDemoDishes } = require("./demo.js");
 const dishes = new Map(); 
 
 //TODO: Check if environment is development 
-addDemoDishes(); 
+addDemoDishes(dishes); 
 
 /**
  * 

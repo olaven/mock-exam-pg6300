@@ -1,4 +1,4 @@
-const nanoid = require(nanoid);
+const nanoid = require("nanoid");
 const { allergy } = require("../../../src/shared/allergy");
 
 const addDemoDishes = (database) => {

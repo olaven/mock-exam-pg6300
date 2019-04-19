@@ -1,7 +1,7 @@
 const express = require("express");
 
 const { code } = require("../../shared/http");
-const { isValid } = require("../../shared/validate");
+const { isValid } = require("../../shared/validator");
 const { retrieveDish, retrieveAllDishes, updateDish, deleteDish } = require("../database/dishes");
 
 const router = express.Router();
@@ -33,6 +33,11 @@ router.delete("/dish:id", (req, res) => {
 		//https://stackoverflow.com/questions/3297048/403-forbidden-vs-401-unauthorized-http-responses#6937030
 	} else {
 
+		if (!req.param.id) {
+			res.status(code.BAD_REQUEST).send();
+			return;
+		}
+
 		const dish = retrieveDish(req.param.id);
 		if (!dish) {
 			res.status(code.NOT_FOUND).send();
@@ -40,7 +45,6 @@ router.delete("/dish:id", (req, res) => {
 			deleteDish(dish.id);
 			res.status(code.NO_CONTENT).send(dish);
 		}
-		return;
 	}
 });
 
