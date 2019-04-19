@@ -1,3 +1,5 @@
+const nanoid = require("nanoid");
+
 // id - dish 
 const dishes = new Map(); 
 
@@ -8,17 +10,25 @@ const dishes = new Map();
  * @param {Allergy[]} allergies 
  * @param {string} info  
  */
-const create = (name, price, allergies, info) => {
+const createDish = (name, price, allergies, info) => {
 
-	
+	const id = nanoid(); 
+	const dish = {
+		id, name, price, allergies, info
+	};
+    
+	/* collision probability similar to UUID v4 (https://github.com/ai/nanoid#normal)
+    For these purposes (cantina app), I am going to assume that there is no collision */
+	dishes.set(id, dish);
+	return id; 
 };
 
-const retrieve = (id) => {
+const retrieveDish = (id) => {
 
 	return dishes.get(id); 
 };
 
-const update = (dish) => {
+const updateDish = (dish) => {
 
 	const old = dishes.get(dish.id);
 	if (!old) throw "cannot update dish that doesn't exist";
@@ -26,16 +36,21 @@ const update = (dish) => {
 	dishes.set(dish.id, dish);
 };
 
-// NOTE: "delete" is reserved 
-const remove = (id) => {
+const deleteDish = (id) => {
 
 	dishes.delete(id);
 };
 
+const clearDishes = () => {
+
+	dishes.clear(); 
+};
+
 
 module.exports = {
-	create,
-	retrieve, 
-	update, 
-	remove
+	createDish,
+	retrieveDish, 
+	updateDish, 
+	deleteDish, 
+	clearDishes,
 };
