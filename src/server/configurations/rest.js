@@ -7,6 +7,7 @@ const configureREST = (app) => {
 	app.use("/api", authApi);
 	app.use("/api", dishApi);
 	app.all("/api*", (req, res) => {
+		console.log(req.url, " not found..."); 
 		res.status(code.NOT_FOUND).send();
 	});
 };

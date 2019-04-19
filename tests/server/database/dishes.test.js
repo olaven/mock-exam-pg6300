@@ -5,7 +5,7 @@ const { allergy } = require("../../../src/shared/allergy");
 const getTestDish = () => {
 
 	return {
-		name: "pancaces",
+		name: "pancakes",
 		price: 20,
 		allergies: [allergy.DAIRY, allergy.GLUTEN],
 		info: "Delicious pancakes for everyone!"
@@ -15,7 +15,7 @@ const getTestDish = () => {
 const createTestDish = () => {
 
 	const dish = getTestDish(); 
-	const id = createDish(dish.name, dish.price, dish.allergies, dish.info);
+	const id = createDish(dish);
 	return id;
 };
 
@@ -29,7 +29,7 @@ describe("The Dish-database", () => {
 	it("can create new dishes", () => {
 
 		const dish = getTestDish(); 
-		const id = createDish(dish.name, dish.price, dish.allergies, dish.info); 
+		const id = createDish(dish); 
 		const retrieved = retrieveDish(id);
 
 		expect(retrieved.id).toEqual(id);

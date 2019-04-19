@@ -13,7 +13,7 @@ const isValid = {
 		if (
 			!dish.name ||
             !dish.price ||
-            !dish.allergies ||
+            dish.allergies === null || dish.allergies === undefined ||
             !dish.info
 		)  return false; 
         
@@ -21,4 +21,6 @@ const isValid = {
 	}
 };
 
-module.exports = isValid;
+module.exports = {
+	isValid
+};

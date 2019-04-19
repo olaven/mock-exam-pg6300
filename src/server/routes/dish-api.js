@@ -2,65 +2,82 @@ const express = require("express");
 
 const { code } = require("../../shared/http");
 const { isValid } = require("../../shared/validator");
-const { retrieveDish, retrieveAllDishes, updateDish, deleteDish } = require("../database/dishes");
+const { createDish, retrieveDish, retrieveAllDishes, updateDish, deleteDish } = require("../database/dishes");
 
 const router = express.Router();
 
 
-router.get("/dish:id", (req, res) => {
+router.get("/dishes", (req, res) => {
+	
+	//TODO: Filter on stuff wiht query
+	res.status(code.OK).send(retrieveAllDishes());
+}); 
 
-	if (req.param.id) {
-        
-		const dish = retrieveDish(req.param.id);
-		if (!dish) {
-			res.status(code.NOT_FOUND).send();
-		} else {
-			res.status(code.OK).send(dish);
-		}
-		return; 
+router.get("/dishes/:id", (req, res) => {
+
+	const id = req.params.id;
+	const dish = retrieveDish(id);
+	if (!dish) {
+		res.status(code.NOT_FOUND).send();
+	} else {
+		res.status(code.OK).send(dish);
 	}
-    
-	res.status(code.OK).send(retrieveAllDishes());   
 });
 
-router.delete("/dish:id", (req, res) => {
+router.delete("/dishes/:id", (req, res) => {
 
 	if (!req.user) {
 		
 		res.status(code.UNAUTHORIZED).send();
+		return; 
 
 		//NOTE: If I add check for "this user is a cook", would send code.FORBIDDEN if user is not 
 		//https://stackoverflow.com/questions/3297048/403-forbidden-vs-401-unauthorized-http-responses#6937030
+	}
+
+	const id = req.params.id;
+	if (!id) {
+		res.status(code.BAD_REQUEST).send();
+		return;
+	}
+
+	const dish = retrieveDish(id);
+	if (!dish) {
+		res.status(code.NOT_FOUND).send();
 	} else {
-
-		if (!req.param.id) {
-			res.status(code.BAD_REQUEST).send();
-			return;
-		}
-
-		const dish = retrieveDish(req.param.id);
-		if (!dish) {
-			res.status(code.NOT_FOUND).send();
-		} else {
-			deleteDish(dish.id);
-			res.status(code.NO_CONTENT).send(dish);
-		}
+		deleteDish(dish.id);
+		res.status(code.NO_CONTENT).send(dish);
 	}
 });
 
-router.post("/dish", (req, res) => {
+router.post("/dishes", (req, res) => {
 
-	const dish = req.body; 
-	if (!isValid.dish(dish)) {
+	if (!req.user) {
+		
+		res.status(code.UNAUTHORIZED).send();
+		return;
+		//NOTE: If I add check for "this user is a cook", would send code.FORBIDDEN if user is not 
+		//https://stackoverflow.com/questions/3297048/403-forbidden-vs-401-unauthorized-http-responses#6937030
+	}
+
+	const dish = req.body;
+
+	const valid = isValid.dish(dish);
+	if (!valid) {
 
 		res.status(code.BAD_REQUEST).send();
-		return; 
+		return;
 	}
 
-	res.status(code.CREATED).send(); 
+	const id = createDish(dish);
+
+	res.header("location", "/api/dishes/" + id);
+	res.status(code.CREATED).send({
+		id
+	});
 });
 
-router.put("/dish", (req, res) => {
+router.put("/dishes/:id", (req, res) => {
 
 	if (!req.user) {
 
@@ -70,17 +87,24 @@ router.put("/dish", (req, res) => {
 		//https://stackoverflow.com/questions/3297048/403-forbidden-vs-401-unauthorized-http-responses#6937030
 	} 
 	
-	const dish = req.param.body;
-	
-	if (!isValid.dish(dish) || !dish.id) {
+	const dish = req.body;
+
+	const valid = isValid.dish(dish);
+	if (!valid || !dish.id) {
 
 		res.status(code.BAD_REQUEST).send();
 		return;
 	} 
 	
-	updateDish(dish);
+	try {
+
+		updateDish(dish);
+		res.status(code.NO_CONTENT).send();
+	} catch (error) {
+
+		res.status(code.NOT_FOUND).send(error.message); 
+	}
 });
 
-router.get;
 
 module.exports = router;

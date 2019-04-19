@@ -15,12 +15,10 @@ addDemoDishes(dishes);
  * @param {Allergy[]} allergies 
  * @param {string} info  
  */
-const createDish = (name, price, allergies, info) => {
+const createDish = (dish) => {
 
 	const id = nanoid(); 
-	const dish = {
-		id, name, price, allergies, info
-	};
+	dish.id = id;
     
 	/* collision probability similar to UUID v4 (https://github.com/ai/nanoid#normal)
     For these purposes (cantina app), I am going to assume that there is no collision */
@@ -29,7 +27,7 @@ const createDish = (name, price, allergies, info) => {
 };
 
 const retrieveAllDishes = () => 
-	dishes.values();
+	Array.from(dishes.values());
 
 const retrieveDish = (id) => {
 
