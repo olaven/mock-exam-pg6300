@@ -18,7 +18,7 @@ app.use(express.static("public"));
 
 configure.authentication();
 configure.websocket();
-configure.graphql();
+//configure.graphql(); //TODO: FIX graphQL-api 
 configure.rest();
 
 

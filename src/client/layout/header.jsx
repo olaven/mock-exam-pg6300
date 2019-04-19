@@ -11,30 +11,8 @@ import { codes } from "../../shared/http";
 
 export default class Header extends React.Component {
 
-    constructor(props) {
-
-        super(props);
-        this.state = {
-            userCount: 0
-        }
-    }
-
-    componentDidMount() {
-
-        this.userSocket = new WebSocket("ws://" + window.location.host + "/usercount");
-        this.userSocket.onmessage = event => {
-        
-            const userCount = JSON.parse(event.data).userCount;
-            this.setState({
-                userCount
-            });
-        }
-        this.userSocket.onerror = error => {
-            console.error("Websocket error: ", error)
-        }
-    }
-
     logout = async () => {
+        
         const url = "/api/logout";
 
         let response;
@@ -78,11 +56,6 @@ export default class Header extends React.Component {
         return <Navbar id="header">
             <NavbarBrand>Project title</NavbarBrand>
             {loggedIn ? this.renderLoggedIn(): this.renderLoggedOut()}
-
-            <NavItem>
-                Users online: {this.state.userCount}
-            </NavItem>
         </Navbar>
-
     }
 }
