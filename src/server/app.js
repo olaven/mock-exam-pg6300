@@ -21,7 +21,6 @@ configure.websocket();
 //configure.graphql(); //TODO: FIX graphQL-api 
 configure.rest();
 
-
 //If 404 -> just return index
 app.use((req, res, next) => {
 	res.sendFile(path.resolve(__dirname, "..", "..", "public", "index.html"));

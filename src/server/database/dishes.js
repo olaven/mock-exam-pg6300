@@ -1,7 +1,12 @@
 const nanoid = require("nanoid");
 
+const { addDemoDishes } = require("./demo.js");
+
 // id - dish 
 const dishes = new Map(); 
+
+//TODO: Check if environment is development 
+addDemoDishes(); 
 
 /**
  * 
@@ -22,6 +27,9 @@ const createDish = (name, price, allergies, info) => {
 	dishes.set(id, dish);
 	return id; 
 };
+
+const retrieveAllDishes = () => 
+	dishes.values();
 
 const retrieveDish = (id) => {
 
@@ -50,7 +58,9 @@ const clearDishes = () => {
 module.exports = {
 	createDish,
 	retrieveDish, 
+	retrieveAllDishes,
 	updateDish, 
 	deleteDish, 
 	clearDishes,
 };
+
