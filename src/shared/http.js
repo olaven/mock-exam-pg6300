@@ -1,4 +1,4 @@
-const codes = {
+const code = {
 	OK: 200, 
 	CREATED: 201,
 	NO_CONTENT: 204, 
@@ -11,5 +11,5 @@ const codes = {
 };
 
 module.exports = {
-	codes
+	code
 };

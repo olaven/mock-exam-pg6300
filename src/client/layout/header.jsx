@@ -7,7 +7,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import { Button, NavLink,  Nav, Navbar, NavItem, NavbarBrand } from "reactstrap";
 
-import { codes } from "../../shared/http";
+import { code } from "../../shared/http";
 
 export default class Header extends React.Component {
 
@@ -24,7 +24,7 @@ export default class Header extends React.Component {
             return;
         }
 
-        if (response.status !== codes.NO_CONTENT) {
+        if (response.status !== code.NO_CONTENT) {
             alert("Error when connecting to server: status code " + response.status);
             return;
         }

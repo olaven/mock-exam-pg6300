@@ -1,7 +1,14 @@
 // id - dish 
 const dishes = new Map(); 
 
-const create = () => {
+/**
+ * 
+ * @param {string} name 
+ * @param {number} price 
+ * @param {Allergy[]} allergies 
+ * @param {string} info  
+ */
+const create = (name, price, allergies, info) => {
 
 	
 };
