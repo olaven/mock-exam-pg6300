@@ -35,6 +35,7 @@ export class Week extends React.Component {
 
         return <div id="home">
             <h1>The menu this week:</h1> 
+            <h1>THIS PAGE SHOULD RENDER COUPLED WITH DAYS OF WEEK</h1>
             {this.renderMenu()}
         </div>
     }

@@ -1,14 +1,19 @@
 const React = require("react");
-const { shallow } = require("enzyme");
+const { shallow, mount } = require("enzyme");
+const { MemoryRouter } = require("react-router-dom");
 
 const { Home } = require("../../../src/client/pages/home.jsx");
 
 const getHome = (props) => {
 
-	return shallow(
-		<Home
-			{...props}/>
+	const routerWrapper = mount(
+		<MemoryRouter>
+			<Home
+				{...props} />
+		</MemoryRouter>
 	);
+
+	return routerWrapper.find(Home);
 }; 
 
 describe("the home page.", () => {
@@ -28,26 +33,20 @@ describe("the home page.", () => {
 		expect(messages.length).toEqual(1);
 	});
 
-	it("renders message to login when user logged out", () => {
+	it("does not render edit-option when user logged out", () => {
 
 		const wrapper = getHome({
 			username: null 
 		}); 
-		const messages = wrapper.find(".homeMessage"); 
-        
-		const message = messages.first(); 
-		expect(message.text()).toEqual("You must log in.");
+
+		expect(wrapper.html()).not.toContain("EDIT"); 
 	});
 
-	it("renders data-message when user logged in", () => {
+	it("does render edit when logged in", () => {
 
 		const wrapper = getHome({
 			username: "Charlie Banks"
 		}); 
-		const messages = wrapper.find(".homeMessage");
-		expect(messages.length).toEqual(1);
-        
-		const message = messages.first();
-		expect(message.text()).toEqual("Go to data page"); 
+		expect(wrapper.html()).toContain("EDIT"); 
 	});
 });
