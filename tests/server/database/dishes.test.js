@@ -1,4 +1,4 @@
-const { createDish, retrieveDish, updateDish, deleteDish, clearDishes } = require("../../../src/server/database/dishes");
+const dishes = require("../../../src/server/database/dishes");
 const { allergy } = require("../../../src/shared/allergy");
 
 // id, name, price, allergies, info
@@ -15,7 +15,7 @@ const getTestDish = () => {
 const createTestDish = () => {
 
 	const dish = getTestDish(); 
-	const id = createDish(dish);
+	const id = dishes.create(dish);
 	return id;
 };
 
@@ -23,14 +23,14 @@ describe("The Dish-database", () => {
 
 	beforeEach(() => {
 
-		clearDishes();
+		dishes.clear();
 	});
 
 	it("can create new dishes", () => {
 
 		const dish = getTestDish(); 
-		const id = createDish(dish); 
-		const retrieved = retrieveDish(id);
+		const id = dishes.create(dish); 
+		const retrieved = dishes.retrieve(id);
 
 		expect(retrieved.id).toEqual(id);
 		expect(retrieved.name).toEqual(dish.name);
@@ -43,8 +43,8 @@ describe("The Dish-database", () => {
 		const dish = getTestDish(); 
 		expect(dish.id).toBeUndefined();
 
-		const id = createDish(dish); 
-		const retrieved = retrieveDish(id);
+		const id = dishes.create(dish); 
+		const retrieved = dishes.retrieve(id);
 
 		expect(retrieved.id).toBeDefined(); 
 	});
@@ -53,12 +53,12 @@ describe("The Dish-database", () => {
 
 		const updateName = "UPDATED NAME FOR PANCAKES!";
 		const id = createTestDish(); 
-		const original = retrieveDish(id);
+		const original = dishes.retrieve(id);
 
 		original.name = updateName;
-		updateDish(original);
+		dishes.update(original);
 		
-		const updated = retrieveDish(id);
+		const updated = dishes.retrieve(id);
 		expect(updated.name).toEqual(updateName);
 	});
 
@@ -68,17 +68,17 @@ describe("The Dish-database", () => {
 		dish.id = "NONEXISTENT_ID";
 
 		expect(() => {
-			updateDish(dish);
+			dishes.update(dish);
 		}).toThrow("cannot update dish that doesn't exist"); 
 	});
 
 	it("can delete dishes", () => {
 
 		const id = createTestDish(); 
-		const before = retrieveDish(id);
+		const before = dishes.retrieve(id);
 
-		deleteDish(id);
-		const after = retrieveDish(id);
+		dishes.remove(id);
+		const after = dishes.retrieve(id);
 
 		expect(before).toBeDefined();
 		expect(after).toBeUndefined(); 

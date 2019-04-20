@@ -15,7 +15,7 @@ addDemoDishes(dishes);
  * @param {Allergy[]} allergies 
  * @param {string} info  
  */
-const createDish = (dish) => {
+const create = (dish) => {
 
 	const id = nanoid(); 
 	dish.id = id;
@@ -26,15 +26,15 @@ const createDish = (dish) => {
 	return id; 
 };
 
-const retrieveAllDishes = () => 
+const retrieveAll = () => 
 	Array.from(dishes.values());
 
-const retrieveDish = (id) => {
+const retrieve = (id) => {
 
 	return dishes.get(id); 
 };
 
-const updateDish = (dish) => {
+const update = (dish) => {
 
 	const old = dishes.get(dish.id);
 	if (!old) throw "cannot update dish that doesn't exist";
@@ -42,23 +42,23 @@ const updateDish = (dish) => {
 	dishes.set(dish.id, dish);
 };
 
-const deleteDish = (id) => {
+const remove = (id) => {
 
 	dishes.delete(id);
 };
 
-const clearDishes = () => {
+const clear = () => {
 
 	dishes.clear(); 
 };
 
 
 module.exports = {
-	createDish,
-	retrieveDish, 
-	retrieveAllDishes,
-	updateDish, 
-	deleteDish, 
-	clearDishes,
+	create,
+	retrieve, 
+	retrieveAll,
+	update, 
+	remove, 
+	clear,
 };
 

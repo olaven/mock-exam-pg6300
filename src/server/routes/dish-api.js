@@ -2,7 +2,7 @@ const express = require("express");
 
 const { code } = require("../../shared/http");
 const { isValid } = require("../../shared/validator");
-const { createDish, retrieveDish, retrieveAllDishes, updateDish, deleteDish } = require("../database/dishes");
+const dishes = require("../database/dishes");
 
 const router = express.Router();
 
@@ -10,13 +10,13 @@ const router = express.Router();
 router.get("/dishes", (req, res) => {
 	
 	//TODO: Filter on stuff wiht query
-	res.status(code.OK).send(retrieveAllDishes());
+	res.status(code.OK).send(dishes.retrieveAll());
 }); 
 
 router.get("/dishes/:id", (req, res) => {
 
 	const id = req.params.id;
-	const dish = retrieveDish(id);
+	const dish = dishes.retrieve(id);
 	if (!dish) {
 		res.status(code.NOT_FOUND).send();
 	} else {
@@ -41,11 +41,11 @@ router.delete("/dishes/:id", (req, res) => {
 		return;
 	}
 
-	const dish = retrieveDish(id);
+	const dish = dishes.retrieve(id);
 	if (!dish) {
 		res.status(code.NOT_FOUND).send();
 	} else {
-		deleteDish(dish.id);
+		dishes.remove(dish.id);
 		res.status(code.NO_CONTENT).send(dish);
 	}
 });
@@ -69,7 +69,7 @@ router.post("/dishes", (req, res) => {
 		return;
 	}
 
-	const id = createDish(dish);
+	const id = dishes.create(dish);
 
 	res.header("location", "/api/dishes/" + id);
 	res.status(code.CREATED).send({
@@ -98,7 +98,7 @@ router.put("/dishes/:id", (req, res) => {
 	
 	try {
 
-		updateDish(dish);
+		dishes.update(dish);
 		res.status(code.NO_CONTENT).send();
 	} catch (error) {
 
