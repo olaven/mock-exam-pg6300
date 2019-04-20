@@ -1,10 +1,6 @@
-/**
- * Returns true if the object 
- * truthy values for all required 
- * fields. 
- * 
- * NOTE: .id is excluded.
- */
+const { day } = require("../shared/day"); 
+
+
 const isValid = {
 
 	//TODO: Move if not used in frontend
@@ -22,8 +18,8 @@ const isValid = {
 	menuItem: menuItem => {
 
 		if (
-			!menuItem.dish ||
-			!menuItem.day
+			!menuItem.dishId ||
+			!Object.values(day).includes(menuItem.day)
 		) return false;
 
 		return true;

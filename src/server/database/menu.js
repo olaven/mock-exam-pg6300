@@ -9,6 +9,7 @@ const { isValid } = require("../../shared/validator");
  * Using the day as key prevents multiple menus per day. 
  */
 
+const dishes = require("./dishes"); 
 const menu = new Map();
 
 //TODO: Check if environment is development 
@@ -18,7 +19,13 @@ addDemoMenuItems(menu);
 const persist = (menuItem) => {
 
 	if (!isValid.menuItem(menuItem)) {
-		throw "invalid menu"; 
+		throw "menuItem is invalid";
+	}
+
+	if(!dishes.retrieveAll()
+		.map(dish => dish.id)
+		.includes(menuItem.dishId)) {
+		throw "dish is not registered"; 
 	}
 
 	menu.set(menuItem.day, menuItem);
@@ -33,10 +40,7 @@ const retrieve = day =>
 
 const update = (menuItem) => {
 
-	const old = menu.get(menuItem.id);
-	if (!old) throw "cannot update menuItem that doesn't exist";
-
-	menu.set(menuItem.id, menuItem);
+	menu.set(menuItem.day, menuItem);
 };
 
 const remove = day => {
