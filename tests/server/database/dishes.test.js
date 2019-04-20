@@ -15,7 +15,7 @@ const getTestDish = () => {
 const createTestDish = () => {
 
 	const dish = getTestDish(); 
-	const id = dishes.create(dish);
+	const id = dishes.persist(dish);
 	return id;
 };
 
@@ -29,7 +29,7 @@ describe("The Dish-database", () => {
 	it("can create new dishes", () => {
 
 		const dish = getTestDish(); 
-		const id = dishes.create(dish); 
+		const id = dishes.persist(dish); 
 		const retrieved = dishes.retrieve(id);
 
 		expect(retrieved.id).toEqual(id);
@@ -43,7 +43,7 @@ describe("The Dish-database", () => {
 		const dish = getTestDish(); 
 		expect(dish.id).toBeUndefined();
 
-		const id = dishes.create(dish); 
+		const id = dishes.persist(dish); 
 		const retrieved = dishes.retrieve(id);
 
 		expect(retrieved.id).toBeDefined(); 

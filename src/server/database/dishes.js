@@ -8,14 +8,7 @@ const dishes = new Map();
 //TODO: Check if environment is development 
 addDemoDishes(dishes); 
 
-/**
- * 
- * @param {string} name 
- * @param {number} price 
- * @param {Allergy[]} allergies 
- * @param {string} info  
- */
-const create = (dish) => {
+const persist = (dish) => {
 
 	const id = nanoid(); 
 	dish.id = id;
@@ -54,7 +47,7 @@ const clear = () => {
 
 
 module.exports = {
-	create,
+	persist,
 	retrieve, 
 	retrieveAll,
 	update, 

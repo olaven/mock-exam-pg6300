@@ -69,7 +69,7 @@ router.post("/dishes", (req, res) => {
 		return;
 	}
 
-	const id = dishes.create(dish);
+	const id = dishes.persist(dish);
 
 	res.header("location", "/api/dishes/" + id);
 	res.status(code.CREATED).send({

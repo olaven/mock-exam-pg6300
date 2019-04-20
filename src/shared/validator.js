@@ -8,7 +8,7 @@
 const isValid = {
 
 	//TODO: Move if not used in frontend
-	dish: (dish) => {
+	dish: dish => {
 
 		if (
 			!dish.name ||
@@ -18,6 +18,15 @@ const isValid = {
 		)  return false; 
         
 		return true; 
+	}, 
+	menuItem: menuItem => {
+
+		if (
+			!menuItem.dish ||
+			!menuItem.day
+		) return false;
+
+		return true;
 	}
 };
 
