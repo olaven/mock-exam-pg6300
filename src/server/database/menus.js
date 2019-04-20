@@ -10,10 +10,10 @@ const { isValid } = require("../../shared/validator");
  */
 
 const dishes = require("./dishes"); 
-const menu = new Map();
+const menus = new Map();
 
 //TODO: Check if environment is development 
-addDemoMenuItems(menu);
+addDemoMenuItems(menus);
 
 
 const persist = (menuItem) => {
@@ -28,29 +28,29 @@ const persist = (menuItem) => {
 		throw "dish is not registered"; 
 	}
 
-	menu.set(menuItem.day, menuItem);
+	menus.set(menuItem.day, menuItem);
 	return menuItem.day;
 };
 
 const retrieveAll = () =>
-	Array.from(menu.values());
+	Array.from(menus.values());
 
 const retrieve = day => 
-	menu.get(day); 
+	menus.get(day); 
 
 const update = (menuItem) => {
 
-	menu.set(menuItem.day, menuItem);
+	menus.set(menuItem.day, menuItem);
 };
 
 const remove = day => {
 
-	menu.delete(day);
+	menus.delete(day);
 };
 
 const clear = () => {
 
-	menu.clear();
+	menus.clear();
 };
 
 
