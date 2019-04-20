@@ -9,8 +9,20 @@ const router = express.Router();
 
 router.get("/dishes", (req, res) => {
 	
-	//TODO: Filter on allergies wiht query
-	res.status(code.OK).send(dishes.retrieveAll());
+
+	let retrieved = dishes.retrieveAll(); 
+
+	if (req.query.allergies) {
+
+		const allergies = req.query.allergies;
+
+		retrieved = retrieved.filter(dish =>
+			dish.allergies.some(allergy =>
+				allergies.includes(allergy)
+			)
+		);
+	}
+	res.status(code.OK).send(retrieved);
 }); 
 
 router.get("/dishes/:id", (req, res) => {

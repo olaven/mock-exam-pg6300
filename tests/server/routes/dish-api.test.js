@@ -1,7 +1,8 @@
 const request = require("supertest");
+
 const { app } = require("../../../src/server/app");
 const { isValid } = require("../../../src/shared/validator"); 
-
+const { allergy } = require("../../../src/shared/allergy"); 
 
 
 let counter = 0; 
@@ -100,6 +101,24 @@ describe("the dish-api.", () => {
 		expect(isValid.dish(dish)).toBe(true); 
 		expect(dish.name).toEqual(name); 
 	});
+
+	it("retrieves dishes filtered by allergies", async () => {
+		
+		const allergies = [allergy.GLUTEN, allergy.FISH]; 
+		const response = await request(app)
+			.get("/api/dishes")
+			.query({ allergies })
+			.send(); 
+
+		expect(response.statusCode).toBe(200); 
+		
+		const dishes = response.body; 
+		dishes.forEach(dish => {
+			
+			const containing = dish.allergies.includes(allergy.GLUTEN) || dish.allergies.includes(allergy.FISH); 
+			expect(containing).toBe(true); 
+		}); 
+	}); 
 
 	it("lets user create dish", async () => {
 
