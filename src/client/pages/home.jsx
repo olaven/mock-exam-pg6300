@@ -12,18 +12,17 @@ export class Home extends React.Component {
 
         const loggedIn = this.props.username !== null;
 
+
         return <div id="home">
             <h1>This is home</h1>
+            <Link to={"/week"}>
+                <p className="homeMessage">Go to the week-menu.</p>
+            </Link>
+            <Link to={"/chat"}>
+                Chat
+                    </Link>
             {loggedIn ? 
-                <div>
-                    <Link to={"/data"}>
-                        <p className="homeMessage">Go to data page</p>
-                    </Link>
-                    <Link to={"/chat"}>
-                        Chat
-                    </Link>
-                </div>:
-                <p className="homeMessage">You must log in.</p>}
+                <div>EDIT MENU </div>:null}
         </div>
     }
 }

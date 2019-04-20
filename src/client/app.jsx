@@ -8,6 +8,7 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import { Home } from "./pages/home.jsx";
+import { Week } from "./pages/week.jsx";
 import { Chat } from "./pages/chat";
 import { NotFound } from "./pages/notFound.jsx"
 import { Signup } from "./authentication/signup.jsx";
@@ -54,6 +55,7 @@ export class App extends React.Component {
 
                 <Switch>
                     {this.renderRouteWithUser("/", Home)}
+                    {this.renderRouteWithUser("/week", Week)}
                     {this.renderRouteWithUser("/chat", Chat)}
                     {this.renderRouteWithUser("/signup", Signup)}
                     {this.renderRouteWithUser("/login", Login)}
