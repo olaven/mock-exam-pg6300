@@ -5,7 +5,7 @@ const { addDemoDishes } = require("./demo.js");
 // id - dish 
 const dishes = new Map(); 
 
-if (process.env.NODE_ENV === "development") {
+if (process.env.ENVIRONMENT === "development") {
 	addDemoDishes(dishes);
 }
 
@@ -23,10 +23,8 @@ const persist = (dish) => {
 const retrieveAll = () => 
 	Array.from(dishes.values());
 
-const retrieve = (id) => {
-
-	return dishes.get(id); 
-};
+const retrieve = id => 
+	dishes.get(id);
 
 const update = (dish) => {
 

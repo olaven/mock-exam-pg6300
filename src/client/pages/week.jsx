@@ -1,5 +1,8 @@
 import React from "react";
+
+import { day } from "../../shared/day";
 import { DishCard } from "../components/dishCard";
+import { MenuCard } from "../components/menuCard";
 
 
 export class Week extends React.Component {
@@ -7,35 +10,32 @@ export class Week extends React.Component {
     constructor(props) {
 
         super(props);
+
         this.state = {
-            dishes: []
+            menus: []
         };
     }
 
     componentDidMount() {
 
-        this.fetchDishes(); 
+        this.fetchMenus(); 
     }
 
-    fetchDishes = async () => {
+    fetchMenus = async () => {
 
-        const response = await fetch("/api/dishes");
-        const dishes = await response.json(); 
-        console.log(dishes);
-        this.setState({
-            dishes
-        });
+        const response = await fetch("/api/menus");
+        const menus = await response.json(); 
+    
+        this.setState({menus: menus})
     }
 
-    renderMenu = () => this.state.dishes.map(dish => 
-        <DishCard key={dish.id} dish={dish}/> 
-    );
+    renderMenu = () => 
+        this.state.menus.map(menu => <MenuCard key={menu.day} menu={menu} />)
 
     render() {
-
+        
         return <div id="home">
             <h1>The menu this week:</h1> 
-            <h1>THIS PAGE SHOULD RENDER COUPLED WITH DAYS OF WEEK</h1>
             {this.renderMenu()}
         </div>
     }

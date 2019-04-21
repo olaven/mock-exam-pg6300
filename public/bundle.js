@@ -2360,6 +2360,18 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});
 
 /***/ }),
 
+/***/ "./src/client/components/menuCard.jsx":
+/*!********************************************!*\
+  !*** ./src/client/components/menuCard.jsx ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nexports.MenuCard = undefined;\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _dishCard = __webpack_require__(/*! ./dishCard.jsx */ \"./src/client/components/dishCard.jsx\");\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nclass MenuCard extends _react2.default.Component {\n\n    constructor(props) {\n\n        super(props);\n\n        this.fetchDish = async () => {\n\n            const id = this.props.menu.dishId;\n            const response = await fetch(\"/api/dishes/\" + id);\n            const dish = await response.json();\n\n            this.setState({\n                dish\n            });\n        };\n\n        this.state = {\n            dish: null\n        };\n    }\n\n    componentDidMount() {\n\n        if (this.props.menu.dishId) {\n\n            this.fetchDish();\n        }\n    }\n\n    render() {\n\n        const dish = this.state.dish;\n\n        return _react2.default.createElement(\n            \"div\",\n            null,\n            _react2.default.createElement(\n                \"h1\",\n                null,\n                this.props.menu.day\n            ),\n            dish ? _react2.default.createElement(_dishCard.DishCard, { dish: dish }) : _react2.default.createElement(\n                \"h2\",\n                null,\n                \"Nothing served this day\"\n            )\n        );\n    }\n}\nexports.MenuCard = MenuCard;\n\n//# sourceURL=webpack:///./src/client/components/menuCard.jsx?");
+
+/***/ }),
+
 /***/ "./src/client/index.jsx":
 /*!******************************!*\
   !*** ./src/client/index.jsx ***!
@@ -2452,7 +2464,18 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nexports.Week = undefined;\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _dishCard = __webpack_require__(/*! ../components/dishCard */ \"./src/client/components/dishCard.jsx\");\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nclass Week extends _react2.default.Component {\n\n    constructor(props) {\n\n        super(props);\n\n        this.fetchDishes = async () => {\n\n            const response = await fetch(\"/api/dishes\");\n            const dishes = await response.json();\n            console.log(dishes);\n            this.setState({\n                dishes\n            });\n        };\n\n        this.renderMenu = () => this.state.dishes.map(dish => _react2.default.createElement(_dishCard.DishCard, { key: dish.id, dish: dish }));\n\n        this.state = {\n            dishes: []\n        };\n    }\n\n    componentDidMount() {\n\n        this.fetchDishes();\n    }\n\n    render() {\n\n        return _react2.default.createElement(\n            \"div\",\n            { id: \"home\" },\n            _react2.default.createElement(\n                \"h1\",\n                null,\n                \"The menu this week:\"\n            ),\n            _react2.default.createElement(\n                \"h1\",\n                null,\n                \"THIS PAGE SHOULD RENDER COUPLED WITH DAYS OF WEEK\"\n            ),\n            this.renderMenu()\n        );\n    }\n}\nexports.Week = Week;\n\n//# sourceURL=webpack:///./src/client/pages/week.jsx?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nexports.Week = undefined;\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _day = __webpack_require__(/*! ../../shared/day */ \"./src/shared/day.js\");\n\nvar _dishCard = __webpack_require__(/*! ../components/dishCard */ \"./src/client/components/dishCard.jsx\");\n\nvar _menuCard = __webpack_require__(/*! ../components/menuCard */ \"./src/client/components/menuCard.jsx\");\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nclass Week extends _react2.default.Component {\n\n    constructor(props) {\n\n        super(props);\n\n        this.fetchMenus = async () => {\n\n            const response = await fetch(\"/api/menus\");\n            const menus = await response.json();\n\n            this.setState({ menus: menus });\n        };\n\n        this.renderMenu = () => this.state.menus.map(menu => _react2.default.createElement(_menuCard.MenuCard, { key: menu.day, menu: menu }));\n\n        this.state = {\n            menus: []\n        };\n    }\n\n    componentDidMount() {\n\n        this.fetchMenus();\n    }\n\n    render() {\n\n        return _react2.default.createElement(\n            \"div\",\n            { id: \"home\" },\n            _react2.default.createElement(\n                \"h1\",\n                null,\n                \"The menu this week:\"\n            ),\n            this.renderMenu()\n        );\n    }\n}\nexports.Week = Week;\n\n//# sourceURL=webpack:///./src/client/pages/week.jsx?");
+
+/***/ }),
+
+/***/ "./src/shared/day.js":
+/*!***************************!*\
+  !*** ./src/shared/day.js ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("const day = {\n\tMONDAY: \"monday\",\n\tTUESDAY: \"tuesday\", \n\tWEDNESDAY: \"wednesday\",\n\tTHURSDAY: \"thursday\",\n\tFRIDAY: \"friday\", \n\tSATURDAY: \"saturday\", \n\tSUNDAY: \"sunday\"\n};\n\nmodule.exports = {\n\tday\n};\n\n//# sourceURL=webpack:///./src/shared/day.js?");
 
 /***/ }),
 

@@ -10,7 +10,7 @@ const configureREST = (app) => {
 	app.use("/api", menuApi);
 
 	app.all("/api*", (req, res) => {
-		console.log(req.url, " not found..."); 
+	
 		res.status(code.NOT_FOUND).send();
 	});
 };
