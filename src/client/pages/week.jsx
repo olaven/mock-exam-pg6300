@@ -1,7 +1,6 @@
 import React from "react";
 
-import { day } from "../../shared/day";
-import { DishCard } from "../components/dishCard";
+import fetching from "../fetching";
 import { MenuCard } from "../components/menuCard";
 
 
@@ -23,8 +22,7 @@ export class Week extends React.Component {
 
     fetchMenus = async () => {
 
-        const response = await fetch("/api/menus");
-        const menus = await response.json(); 
+        const menus = await fetching.menus();
     
         this.setState({menus: menus})
     }
