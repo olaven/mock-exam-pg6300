@@ -14,6 +14,8 @@ import { NotFound } from "./pages/notFound.jsx"
 import { Signup } from "./authentication/signup.jsx";
 import { Login } from "./authentication/login.jsx";
 import { Layout } from "./layout/layout.jsx";
+import { EditMenus } from "./pages/editMenus.jsx";
+import { EditDishes } from "./pages/editDishes.jsx";
 
 export class App extends React.Component {
 
@@ -56,6 +58,8 @@ export class App extends React.Component {
                 <Switch>
                     {this.renderRouteWithUser("/", Home)}
                     {this.renderRouteWithUser("/week", Week)}
+                    {this.renderRouteWithUser("/editMenus", EditMenus)}
+                    {this.renderRouteWithUser("/editDishes", EditDishes)}
                     {this.renderRouteWithUser("/chat", Chat)}
                     {this.renderRouteWithUser("/signup", Signup)}
                     {this.renderRouteWithUser("/login", Login)}

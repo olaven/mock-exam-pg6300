@@ -8,9 +8,9 @@
     "test": "jest --verbose --coverage",
     "dev": "concurrently \"yarn watch:client\" \"yarn watch:server\"",
     "watch:client": "webpack --watch --mode development",
-    "watch:server": "cross-env ENVIRONMENT=development nodemon src/server/server.js --watch src/server --watch public/bundle.js",
+    "watch:server": "nodemon src/server/server.js --watch src/server --watch public/bundle.js",
     "build": "webpack --mode production",
-    "start": "node src/server/server.js",
+    "start": "cross-env ENVIRONMENT=production node src/server/server.js",
     "lint": "./node_modules/.bin/eslint src/ --fix"
   },
   "dependencies": {

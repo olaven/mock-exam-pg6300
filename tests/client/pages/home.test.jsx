@@ -33,13 +33,13 @@ describe("the home page.", () => {
 		expect(messages.length).toEqual(1);
 	});
 
-	it("does not render edit-option when user logged out", () => {
+	it("does not render admin-options when user logged out", () => {
 
 		const wrapper = getHome({
 			username: null 
 		}); 
 
-		expect(wrapper.html()).not.toContain("EDIT"); 
+		expect(wrapper.html()).not.toContain("Admin options"); 
 	});
 
 	it("does render edit when logged in", () => {
@@ -47,6 +47,6 @@ describe("the home page.", () => {
 		const wrapper = getHome({
 			username: "Charlie Banks"
 		}); 
-		expect(wrapper.html()).toContain("EDIT"); 
+		expect(wrapper.html()).toContain("Admin options"); 
 	});
 });

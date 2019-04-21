@@ -5,7 +5,7 @@ const { addDemoDishes } = require("./demo.js");
 // id - dish 
 const dishes = new Map(); 
 
-if (process.env.ENVIRONMENT === "development") {
+if (process.env.ENVIRONMENT !== "production") {
 	addDemoDishes(dishes);
 }
 

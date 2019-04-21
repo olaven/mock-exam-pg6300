@@ -12,7 +12,7 @@ const { isValid } = require("../../shared/validator");
 const dishes = require("./dishes"); 
 const menus = new Map();
 
-if (process.env.ENVIRONMENT === "development") {
+if (process.env.ENVIRONMENT !== "production") {
 	addDemoMenuItems(menus);
 }
 

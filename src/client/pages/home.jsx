@@ -22,7 +22,15 @@ export class Home extends React.Component {
                 Chat
                     </Link>
             {loggedIn ? 
-                <div>EDIT MENU </div>:null}
+                <div>
+                    <h2>Admin options:</h2>
+                    <Link to={"/editMenus"}>
+                        Edit menus
+                    </Link>
+                    <Link to={"/editDishes"}>
+                        Edit dishes
+                    </Link>
+                </div>:null}
         </div>
     }
 }

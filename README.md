@@ -19,7 +19,7 @@
 
 ## General notes
 * Modifications to yarn scripts:
-  * configuring `yarn dev` to set environment variable. It indicates wether the server is running in development mode or not. This way, I may add demo data only when application is in demo mode.
+  * configuring `yarn dev` to set environment variable. It indicates wether the server is running in development mode or not. This way, I may add demo data only when application is not in production.
 * notes about copying from course repo 
   * Some files are completely copied. Others are copied, and later modified. This is differentiated in the comment. 
   * JSON-format does not support comments. `package.json`is copied from [this file](https://github.com/arcuri82/web_development_and_api_design/blob/master/exercise-solutions/quiz-game/part-10/package.json)
