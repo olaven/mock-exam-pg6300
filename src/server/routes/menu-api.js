@@ -2,7 +2,7 @@ const express = require("express");
 
 const { code } = require("../../shared/http");
 const { isValid } = require("../../shared/validator");
-const dishes = require("../database/dishes");
+const { isAuthenticated } = require("../middleware");
 const menus = require("../database/menus");
 
 
@@ -41,13 +41,7 @@ router.get("/menus/:day", (req, res) => {
 	}
 });
 
-router.delete("/menus/:day", (req, res) => {
-
-	if (!req.user) {
-
-		res.status(code.UNAUTHORIZED).send();
-		return;
-	}
+router.delete("/menus/:day", isAuthenticated, (req, res) => {
 
 	const day = req.params.day;
 	if (!day) {
@@ -64,13 +58,7 @@ router.delete("/menus/:day", (req, res) => {
 	}
 });
 
-router.post("/menus", (req, res) => {
-
-	if (!req.user) {
-
-		res.status(code.UNAUTHORIZED).send();
-		return;
-	}
+router.post("/menus", isAuthenticated, (req, res) => {
 
 	const menuItem = req.body;
 
@@ -81,7 +69,7 @@ router.post("/menus", (req, res) => {
 		return;
 	}
 
-	const day = dishes.persist(menuItem);
+	const day = menus.persist(menuItem);
 
 	res.header("location", "/api/menus/" + day);
 	res.status(code.CREATED).send({
@@ -89,13 +77,7 @@ router.post("/menus", (req, res) => {
 	});
 });
 
-router.put("/menus/:day", (req, res) => {
-
-	if (!req.user) {
-
-		res.status(code.UNAUTHORIZED).send();
-		return;
-	}
+router.put("/menus/:day", isAuthenticated, (req, res) => {
 
 	const menuItem = req.body;
 
@@ -108,7 +90,7 @@ router.put("/menus/:day", (req, res) => {
 
 	try {
 
-		dishes.update(menuItem);
+		menus.update(menuItem);
 		res.status(code.NO_CONTENT).send();
 	} catch (error) {
 

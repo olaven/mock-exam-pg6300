@@ -1,5 +1,6 @@
 const express = require("express");
 
+const { isAuthenticated } = require("../middleware");
 const { code } = require("../../shared/http");
 const { isValid } = require("../../shared/validator");
 const dishes = require("../database/dishes");
@@ -9,7 +10,6 @@ const router = express.Router();
 
 router.get("/dishes", (req, res) => {
 	
-
 	let retrieved = dishes.retrieveAll(); 
 
 	if (req.query.allergies) {
@@ -36,16 +36,7 @@ router.get("/dishes/:id", (req, res) => {
 	}
 });
 
-router.delete("/dishes/:id", (req, res) => {
-
-	if (!req.user) {
-		
-		res.status(code.UNAUTHORIZED).send();
-		return; 
-
-		//NOTE: If I add check for "this user is a cook", would send code.FORBIDDEN if user is not 
-		//https://stackoverflow.com/questions/3297048/403-forbidden-vs-401-unauthorized-http-responses#6937030
-	}
+router.delete("/dishes/:id", isAuthenticated, (req, res) => {
 
 	const id = req.params.id;
 	if (!id) {
@@ -62,15 +53,8 @@ router.delete("/dishes/:id", (req, res) => {
 	}
 });
 
-router.post("/dishes", (req, res) => {
+router.post("/dishes", isAuthenticated, (req, res) => {
 
-	if (!req.user) {
-		
-		res.status(code.UNAUTHORIZED).send();
-		return;
-		//NOTE: If I add check for "this user is a cook", would send code.FORBIDDEN if user is not 
-		//https://stackoverflow.com/questions/3297048/403-forbidden-vs-401-unauthorized-http-responses#6937030
-	}
 
 	const dish = req.body;
 
@@ -89,15 +73,7 @@ router.post("/dishes", (req, res) => {
 	});
 });
 
-router.put("/dishes/:id", (req, res) => {
-
-	if (!req.user) {
-
-		res.status(code.UNAUTHORIZED).send();
-		return;
-		//NOTE: If I add check for "this user is a cook", would send code.FORBIDDEN if user is not 
-		//https://stackoverflow.com/questions/3297048/403-forbidden-vs-401-unauthorized-http-responses#6937030
-	} 
+router.put("/dishes/:id", isAuthenticated, (req, res) => {
 	
 	const dish = req.body;
 

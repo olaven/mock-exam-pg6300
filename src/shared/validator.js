@@ -23,6 +23,9 @@ const isValid = {
 		) return false;
 
 		return true;
+	},
+	day: dayValue => {
+		return Object.values(day).includes(dayValue);
 	}
 };
 

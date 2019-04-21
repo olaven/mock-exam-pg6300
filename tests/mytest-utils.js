@@ -268,8 +268,27 @@ function overrideWebSocket() {
 }
 
 
+const getLoggedInAgent = async (app) => {
+
+	const username = "foo" + Math.floor(Math.random() * Math.floor(1000));
+	const password = "bar";
+
+	const agent = await request.agent(app);
+	await agent
+		.post("/api/signup")
+		.send({
+			username,
+			password
+		})
+		.set("Content-Type", "application/json");
+
+	return agent;
+};
+
+
 
 module.exports = {
+	getLoggedInAgent,
 	stubFetch,
 	flushPromises,
 	overrideFetch,

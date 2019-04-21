@@ -1,27 +1,9 @@
 const request = require("supertest");
 
 const { app } = require("../../../src/server/app");
+const { getLoggedInAgent } = require("../../mytest-utils");
 const { isValid } = require("../../../src/shared/validator"); 
 const { allergy } = require("../../../src/shared/allergy"); 
-
-
-let counter = 0; 
-
-
-const getLoggedInAgent = async () => {
-
-	const agent = await request.agent(app);
-	let response = await agent
-		.post("/api/signup")
-		.send({
-			username: ("foo_" + counter++),
-			password: "bar"
-		})
-		.set("Content-Type", "application/json");
-
-	expect(response.statusCode).toBe(201);
-	return agent; 
-};
 
 const createDishWith = async (agent) => {
 
@@ -73,7 +55,7 @@ describe("the dish-api.", () => {
 
 	it("retrieves dish by id", async () => {
 
-		const agent = await getLoggedInAgent(); 
+		const agent = await getLoggedInAgent(app);
 
 		const name = "Test Dish Name";
 		let response = await agent
@@ -122,7 +104,7 @@ describe("the dish-api.", () => {
 
 	it("lets user create dish", async () => {
 
-		const agent = await getLoggedInAgent(); 
+		const agent = await getLoggedInAgent(app);
 		const response = await createDishWith(agent); 
 
 		expect(response.statusCode).toBe(201);
@@ -141,7 +123,7 @@ describe("the dish-api.", () => {
 
 	it("lets user update dish", async () => {
 
-		const agent = await getLoggedInAgent(); 
+		const agent = await getLoggedInAgent(app);
 		let response = await createDishWith(agent);
         
 		const location = response.header.location; 
@@ -173,7 +155,7 @@ describe("the dish-api.", () => {
 
 	it("if updating while not logged in, returns 401", async () => {
 
-		const loggedInAgent = await getLoggedInAgent();
+		const loggedInAgent = await getLoggedInAgent(app);
 		const postResponse = await createDishWith(loggedInAgent);
 		const location = postResponse.header.location;
 		const id = postResponse.body.id;
@@ -210,7 +192,7 @@ describe("the dish-api.", () => {
     
 	it("can delete data", async () => {
 
-		const agent = await getLoggedInAgent();
+		const agent = await getLoggedInAgent(app);
 		const postResponse = await createDishWith(agent);
 		const id = postResponse.body.id;
 
@@ -229,7 +211,7 @@ describe("the dish-api.", () => {
 
 	it("returns 404 if deleting non-existent dish", async () => {
 
-		const agent = await getLoggedInAgent(); 
+		const agent = await getLoggedInAgent(app);
 		const deleteResponse = await agent
 			.delete("/api/dishes/NON-EXISTING")
 			.send();
@@ -240,7 +222,7 @@ describe("the dish-api.", () => {
 	it("Fails to delete when not logged in.", async () => {
 
 
-		const loggedInAgent = await getLoggedInAgent();
+		const loggedInAgent = await getLoggedInAgent(app);
 		let postResponse = await createDishWith(loggedInAgent);
 		const id = postResponse.body.id;
 
