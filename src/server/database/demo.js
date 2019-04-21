@@ -77,45 +77,38 @@ const demoDishes = [
 
 const demoMenuItems = [
 	{
-		id: nanoid(),
-		dishId: demoDishes[0], 
+		dishId: demoDishes[0].id, 
 		day: day.MONDAY
 	},
 	{
-		id: nanoid(),
-		dishId: demoDishes[1], 
+		dishId: demoDishes[1].id, 
 		day: day.TUESDAY
 	},
 	{
-		id: nanoid(),
-		dishId: demoDishes[2],
+		dishId: demoDishes[2].id,
 		day: day.WEDNESDAY
 	},
 	{
-		id: nanoid(),
-		dishId: demoDishes[3],
+		dishId: demoDishes[3].id,
 		day: day.THURSDAY
 	},
 	{
-		id: nanoid(),
-		dishId: demoDishes[4],
+		dishId: demoDishes[4].id,
 		day: day.FRIDAY
 	},
 	{
-		id: nanoid(),
-		dishId: demoDishes[5],
+		dishId: demoDishes[5].id,
 		day: day.SATURDAY
 	},
 	{
-		id: nanoid(),
-		dishId: demoDishes[6],
+		dishId: demoDishes[6].id,
 		day: day.SUNDAY
 	}
 ]; 
 
 const addDemoMenuItems = database => {
 	
-	demoDishes.forEach(menuItem => {
+	demoMenuItems.forEach(menuItem => {
 		database.set(menuItem.id, menuItem); 
 	}); 
 }; 
