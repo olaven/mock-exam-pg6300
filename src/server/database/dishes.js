@@ -5,8 +5,9 @@ const { addDemoDishes } = require("./demo.js");
 // id - dish 
 const dishes = new Map(); 
 
-//TODO: Check if environment is development 
-addDemoDishes(dishes); 
+if (process.env.NODE_ENV === "development") {
+	addDemoDishes(dishes);
+}
 
 const persist = (dish) => {
 

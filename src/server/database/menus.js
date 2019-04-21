@@ -12,8 +12,11 @@ const { isValid } = require("../../shared/validator");
 const dishes = require("./dishes"); 
 const menus = new Map();
 
-//TODO: Check if environment is development 
-addDemoMenuItems(menus);
+console.log(process.env.ENVIRONMENT);
+if (process.env.ENVIRONMENT === "development") {
+	addDemoMenuItems(menus);
+}
+
 
 
 const persist = (menuItem) => {
@@ -32,8 +35,9 @@ const persist = (menuItem) => {
 	return menuItem.day;
 };
 
-const retrieveAll = () =>
+const retrieveAll = () => 
 	Array.from(menus.values());
+	
 
 const retrieve = day => 
 	menus.get(day); 

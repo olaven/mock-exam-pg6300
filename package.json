@@ -8,7 +8,7 @@
     "test": "jest --verbose --coverage",
     "dev": "concurrently \"yarn watch:client\" \"yarn watch:server\"",
     "watch:client": "webpack --watch --mode development",
-    "watch:server": "nodemon src/server/server.js --watch src/server --watch public/bundle.js",
+    "watch:server": "cross-env ENVIRONMENT=development nodemon src/server/server.js --watch src/server --watch public/bundle.js",
     "build": "webpack --mode production",
     "start": "node src/server/server.js",
     "lint": "./node_modules/.bin/eslint src/ --fix"
@@ -28,7 +28,6 @@
     "react-dom": "^16.4.2",
     "react-router-dom": "^4.3.1",
     "reactstrap": "^8.0.0",
-    "style-loader": "^0.23.1",
     "ws": "^6.2.1"
   },
   "devDependencies": {
@@ -40,6 +39,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "concurrently": "^4.1.0",
+    "cross-env": "^5.2.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^5.16.0",
@@ -53,6 +53,7 @@
     "jsdom": "^11.12.0",
     "nodemon": "^1.18.9",
     "react-addons-test-utils": "^15.6.2",
+    "style-loader": "^0.23.1",
     "supertest": "^4.0.2",
     "webpack": "^4.16.2",
     "webpack-cli": "^3.1.0",
