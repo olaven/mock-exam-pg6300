@@ -70,18 +70,17 @@ router.post("/menus", isAuthenticated, (req, res) => {
 	}
 
 	const day = menus.persist(menuItem);
+	const body = {day};
 
 	res.header("location", "/api/menus/" + day);
-	res.status(code.CREATED).send({
-		day
-	});
+	res.status(code.CREATED).send(body);
 });
 
 router.put("/menus/:day", isAuthenticated, (req, res) => {
 
 	const menuItem = req.body;
 
-	const valid = isValid.dish(menuItem);
+	const valid = isValid.menuItem(menuItem);
 	if (!valid) {
 
 		res.status(code.BAD_REQUEST).send();

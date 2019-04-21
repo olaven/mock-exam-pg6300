@@ -2463,7 +2463,7 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("const code = {\n\tOK: 200, \n\tCREATED: 201,\n\tNO_CONTENT: 204, \n\tMOVED_PERMANENTLY: 301,\n\tBAD_REQUEST: 400, \n\tUNAUTHORIZED: 401,\n\tFORBIDDEN: 403, \n\tNOT_FOUND: 404,\n\tINTERNAL_SERVER_ERROR: 500\n};\n\nmodule.exports = {\n\tcode\n};\n\n//# sourceURL=webpack:///./src/shared/http.js?");
+eval("const code = {\n\tOK: 200, \n\tCREATED: 201,\n\tNO_CONTENT: 204, \n\tMOVED_PERMANENTLY: 301,\n\tBAD_REQUEST: 400, \n\tUNAUTHORIZED: 401,\n\tFORBIDDEN: 403, \n\tNOT_FOUND: 404,\n\tCONFLICT: 409,\n\tINTERNAL_SERVER_ERROR: 500\n};\n\nmodule.exports = {\n\tcode\n};\n\n//# sourceURL=webpack:///./src/shared/http.js?");
 
 /***/ })
 

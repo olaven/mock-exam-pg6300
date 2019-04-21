@@ -68,9 +68,7 @@ router.post("/dishes", isAuthenticated, (req, res) => {
 	const id = dishes.persist(dish);
 
 	res.header("location", "/api/dishes/" + id);
-	res.status(code.CREATED).send({
-		id
-	});
+	res.status(code.CREATED).send({ id });
 });
 
 router.put("/dishes/:id", isAuthenticated, (req, res) => {
@@ -78,6 +76,13 @@ router.put("/dishes/:id", isAuthenticated, (req, res) => {
 	const dish = req.body;
 
 	const valid = isValid.dish(dish);
+
+	if (dish.id !== req.params.id) {
+
+		res.status(code.CONFLICT).send();
+		return;
+	}
+
 	if (!valid || !dish.id) {
 
 		res.status(code.BAD_REQUEST).send();

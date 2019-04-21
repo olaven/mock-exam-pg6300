@@ -20,7 +20,7 @@ const createDishWith = async (agent) => {
 	return response.body.id;
 };
 
-const createMenuOn = async day => {
+const createMenuOn = async (day) => {
 
 	const agent = await getLoggedInAgent(app);
 	const dishId = await createDishWith(agent);
@@ -28,12 +28,12 @@ const createMenuOn = async day => {
 	const response = await agent
 		.post("/api/menus")
 		.send({
-			dishId,
-			day
+			dishId: dishId,
+			day: day
 		});
 
 	return response; 
-}
+};
 
 describe("the dish-api.", () => {
 
@@ -68,9 +68,31 @@ describe("the dish-api.", () => {
 		expect(isValid.menuItem(response.body)).toBe(true);
 	});
 
-	it("returns 400 if day is not valid", async () => {
+	it("creating returns 400 if day is not valid", async () => {
 
 		const response = await createMenuOn("INVALID DAY");
 		expect(response.statusCode).toBe(400);
+	});
+
+	it("is possible to update menu", async () => {
+
+		const agent = await getLoggedInAgent(app);
+		const postResponse = await createMenuOn(day.MONDAY);
+		expect(postResponse.statusCode).toBe(201);
+
+		const updatedDishId = await createDishWith(agent);
+
+		await agent
+			.put("/api/menus/" + day.MONDAY)
+			.send({
+				day: day.MONDAY,
+				dishId: updatedDishId
+			});
+
+		const getResponse = await agent.get("/api/menus/" + day.MONDAY).send();
+		expect(getResponse.statusCode).toBe(200);
+		const retrieved = getResponse.body;
+
+		expect(retrieved.dishId).toEqual(updatedDishId);
 	});
 });
