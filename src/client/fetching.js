@@ -53,7 +53,23 @@ const put = {
             return true; 
         } 
         return false; 
-    }
+	},
+	
+	dish: async (dish) => {
+
+		const response = await fetch("/api/dishes/" + dish.id, {
+			method: "put",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(dish)
+		});
+
+		if (response.status === code.NO_CONTENT) {
+			return true;
+		}
+		return false;
+	}
 }
 
 

@@ -1,7 +1,8 @@
 import React from "react";
 
 import { LinkToHome } from "../components/linkToHome"; 
-import { get } from "../fetching"; 
+import fetching from "../fetching"; 
+import { EditDishCard } from "../components/editDishCard";
 
 export class EditDishes extends React.Component {
 
@@ -9,37 +10,47 @@ export class EditDishes extends React.Component {
 
         super(props); 
         this.state = {
-            dishes: []
+            dishes: [], 
+            errorMessage: "" 
         }
     }
 
     componentDidMount() {
 
-        this.fetchDishes(); 
+        if (this.props.username !== null) {
+            // no point in fetching if page should not be displayed 
+            this.fetchDishes(); 
+        }
     }
 
     fetchDishes = async () => {
 
         try {
-            const dishes = await get.dishes(); 
+            
+            const dishes = await fetching.get.dishes(); 
             this.setState({
-                dishes
+                dishes, 
+                errorMessage: "" 
             }); 
-            console.log(dishes); 
         } catch(error) {
-
-            alert("An error occured. Are you connected to the internet?"); 
+            console.log(error); 
+            this.setState({
+                errorMessage: "An error occured talking to server."
+            }); 
         }
     }
+
+    renderDishes = () => this.state.dishes.map(dish => <EditDishCard dish={dish} key={dish.id}/>)
 
     render() {
 
         const loggedIn = this.props.username !== null; 
         if (!loggedIn) return <LinkToHome />
 
-
         return <div>
             <h1>Edit dishes</h1>
+            {this.state.errorMessage}
+            {this.renderDishes()}
         </div>
     }
 }

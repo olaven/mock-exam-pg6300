@@ -30,8 +30,6 @@ router.get("/dishes/:id", (req, res) => {
 	const id = req.params.id;
 	const dish = dishes.retrieve(id);
 
-	console.log("getting a request for ", id);
-	console.log("found: ", dish);
 	if (!dish) {
 		res.status(code.NOT_FOUND).send();
 	} else {
