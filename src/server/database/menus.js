@@ -1,4 +1,5 @@
 const { addDemoMenuItems } = require("./demo"); 
+const { day } = require("../../shared/day");
 const { isValid } = require("../../shared/validator"); 
 
 
@@ -11,6 +12,11 @@ const { isValid } = require("../../shared/validator");
 
 const dishes = require("./dishes"); 
 const menus = new Map();
+
+// add the days 
+Array.from(Object.values(day)).forEach(day => {
+	menus.set(day, null);
+})
 
 if (process.env.ENVIRONMENT !== "production") {
 	addDemoMenuItems(menus);

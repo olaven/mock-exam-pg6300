@@ -1,5 +1,6 @@
 import React from "react";
 
+import { day } from "../../shared/day";
 import fetching from "../fetching";
 import { MenuCard } from "../components/menuCard";
 
@@ -11,7 +12,7 @@ export class Week extends React.Component {
         super(props);
 
         this.state = {
-            menus: []
+            menus: new Map()
         };
     }
 
@@ -22,13 +23,20 @@ export class Week extends React.Component {
 
     fetchMenus = async () => {
 
-        const menus = await fetching.get.menus();
-    
+        const fetchedMenus = await fetching.get.menus();
+        const menus = new Map(); 
+        
+        fetchedMenus.forEach(menu => {
+            menus.set(menu.day, menu);
+        });
+
         this.setState({menus: menus})
     }
 
-    renderMenu = () => 
-        this.state.menus.map(menu => <MenuCard key={menu.day} menu={menu} />)
+    renderMenu = () => Array.from(Object.values(day)).map(
+        (day) => <MenuCard key={day} day={day} memu={this.state.menus.get(day)}/>
+    ) 
+        //this.state.menus.map((menu, index) => <MenuCard key={index} menu={menu} />)
 
     render() {
         

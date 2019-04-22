@@ -14,7 +14,7 @@ export class MenuCard extends React.Component {
 
     componentDidMount() {
 
-        if (this.props.menu.dishId) {
+        if (this.props.menu) {
             
             this.fetchDish();
         }
@@ -36,7 +36,7 @@ export class MenuCard extends React.Component {
         const dish = this.state.dish; 
         
         return <div>
-            <h1>{this.props.menu.day}</h1>
+            <h1>{this.props.day}</h1>
             {dish? 
                 <DishCard dish={dish} />: 
                 <h2>Nothing served this day</h2>}
