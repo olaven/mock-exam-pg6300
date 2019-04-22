@@ -4,6 +4,7 @@ const { isAuthenticated } = require("../middleware");
 const { code } = require("../../shared/http");
 const { isValid } = require("../../shared/validator");
 const dishes = require("../database/dishes");
+const menus = require("../database/menus");
 
 const router = express.Router();
 
@@ -51,6 +52,12 @@ router.delete("/dishes/:id", isAuthenticated, (req, res) => {
 		res.status(code.NOT_FOUND).send();
 	} else {
 		dishes.remove(dish.id);
+
+		//updating menus that have this dish registered 
+		menus.retrieveAll()
+			.filter(menu => menu.dishId === id)
+			.forEach(menu => {menu.dishId = null;});
+
 		res.status(code.NO_CONTENT).send(dish);
 	}
 });

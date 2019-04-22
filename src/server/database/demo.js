@@ -106,6 +106,21 @@ const demoMenuItems = [
 	}
 ]; 
 
+const demoUsers = [
+	{
+		username: "Lisa the chef", 
+		password: "I-love-my-job!"
+	}, 
+	{
+		username: "Principal Henry", 
+		password: "unicornsaregreat"
+	},
+	{
+		username: "dev",
+		password: "dev"
+	}
+];
+
 const addDemoMenuItems = database => {
 	
 	demoMenuItems.forEach(menuItem => {
@@ -120,8 +135,15 @@ const addDemoDishes = database => {
 	}); 
 };
 
+const addDemoUsers = database => {
+
+	demoUsers.forEach(user => {
+		database.set(user.username, user);
+	});
+}
 
 module.exports = {
 	addDemoDishes, 
-	addDemoMenuItems
+	addDemoMenuItems, 
+	addDemoUsers
 };

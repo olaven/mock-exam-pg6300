@@ -73,9 +73,10 @@ export class EditMenus extends React.Component {
         const selected = this.state.dishes.find(dish => menu.dishId === dish.id);
         if (selected) {
             nameOfSelected = selected.name; 
+        } else {
+            nameOfSelected = "no meal";
         }
 
-        console.log("name of selected: ", nameOfSelected);
         return <select onChange={(event) => {this.update(event.target.value, menu)}}>
             {this.state.dishes.map(dish => 
                 (dish.name === nameOfSelected) ? 

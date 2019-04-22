@@ -1,22 +1,27 @@
+const { addDemoUsers } = require("./demo.js");
 
-let database = new Map();
 
+let users = new Map();
+
+if (process.env.ENVIRONMENT !== "production") {
+	addDemoUsers(users);
+}
 
 const getUser = (username) => {
 
-	return database.get(username);
+	return users.get(username);
 };
 
 const verifyUser = (username, password) => {
 
-	const user = database.get(username);
+	const user = users.get(username);
 	if (!user) return false;
 	return user.password === password;
 };
 
 const createUser = (username, password) => {
 
-	const exists = database.get(username);
+	const exists = users.get(username);
 
 	if (exists) {
 		return false;
@@ -28,13 +33,13 @@ const createUser = (username, password) => {
 		//TODO: add more user data 
 	};
 
-	database.set(username, user);
+	users.set(username, user);
 	return true;
 };
 
 const clearUsers = () => {
 
-	database = new Map();
+	users = new Map();
 };
 
 module.exports = {

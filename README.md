@@ -10,6 +10,12 @@
 - [ ] test the app without internet connection
 - [ ] deploy most recent version to heroku with "git push heroku master" 
 
+## Login 
+When running in dev mode, demo data and demo-users are added. 
+To login, enter the following: 
+* username: dev 
+* password: dev 
+
 
 ## Extras 
 * I have added styling with [Reactstrap](https://reactstrap.github.io). This required adding css-loaders to `webpack.config.js`. 
