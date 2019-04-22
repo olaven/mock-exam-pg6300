@@ -30,8 +30,6 @@ export class Week extends React.Component {
             menus.set(menu.day, menu);
         });
 
-        console.log("state is set", menus);
-
         this.setState({menus: menus})
     }
 
@@ -42,11 +40,7 @@ export class Week extends React.Component {
         return <div id="home">
             <h1>The menu this week:</h1> 
             {Array.from(Object.values(day)).map(
-                (day) => {
-                    console.log(menus.get(day))
-                    return <MenuCard key={day} day={day} menu={menus.get(day)} className="menu-card"/>
-                
-                }
+                (day) => <MenuCard key={day} day={day} menu={menus.get(day)} className="menu-card"/>
             )}
         </div>
     }

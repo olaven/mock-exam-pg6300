@@ -45,7 +45,6 @@ export class EditMenus extends React.Component {
         const dishId = this.state.dishes.find(dish => dish.name === dishName).id; 
         menu.dishId = dishId;
 
-        console.log("after ", menu);
         const updated = await fetching.put.menu(menu); 
         if (!updated) {
             alert("an error occured when updating.."); 

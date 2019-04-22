@@ -68,9 +68,6 @@ export class Signup extends React.Component {
                 body: JSON.stringify(payload)
             });
         } catch (err) {
-            console.log(
-                "error connecting to server"
-            )
             this.setState({ serverErrorMessage: "Failed to connect to server: " + err });
             return;
         }

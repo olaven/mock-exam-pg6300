@@ -5,6 +5,7 @@ import { InputGroup, Input, InputGroupAddon, Button, Badge} from "reactstrap"
 import fetching from "../fetching";
 import { LinkToHome } from "../components/linkToHome";
 import { allergy } from "../../shared/allergy";
+import { TimeStats } from "apollo-engine-reporting-protobuf";
 
 export class AddDish extends React.Component {
 
@@ -23,12 +24,16 @@ export class AddDish extends React.Component {
 
     validateInput = () => {
 
+        this.state.name//?
+        this.state.price//? 
+        this.state.info//? 
+
         if (this.state.name.trim().length === 0 ||
             this.state.info.trim().length === 0 ||
             isNaN(this.state.price) || this.state.price === "" || this.state.price  < 1) {
-
+                
                 this.setState({
-                    buttonDisabled: true 
+                    buttonDisabled: true
                 }); 
             } else {
                 this.setState({
@@ -36,6 +41,7 @@ export class AddDish extends React.Component {
                 });
             }
     }
+
 
     onSuccessfulPost = () => {
 
@@ -55,30 +61,34 @@ export class AddDish extends React.Component {
 
     updateName = event => {
 
+        // NOTE: passing the cb guarantees that state has changed when input is validated
         const name = event.target.value;
-        this.setState({ name });
-        this.validateInput();
+        this.setState({ name }, () => {
+            this.validateInput();
+        });
     }
 
     updatePrice = event => {
 
         const price = event.target.value;
-        this.setState({ price });
-        this.validateInput(); 
+        this.setState({ price }, () => {
+            this.validateInput(); 
+        });
     }
 
     updateInfo = event => {
 
         const info = event.target.value;
-        this.setState({ info });
-        this.validateInput();
+        this.setState({ info }, () => {
+            this.validateInput();
+        });
     }
 
     updateAllergies = event => {
 
         const options = Array.from(event.target.options);
         const allergies = options.filter(option => option.selected).map(option => option.text)
-        console.log(options);
+        
         this.setState({
             allergies
         });
@@ -93,8 +103,6 @@ export class AddDish extends React.Component {
             allergies: this.state.allergies
         }
 
-        console.log(dish);
-
         const posted = await fetching.post.dish(dish); 
         if (!posted) {
             alert("an error occured when adding..");
@@ -102,7 +110,7 @@ export class AddDish extends React.Component {
             this.onSuccessfulPost();
         }
 
-        //TODO: clear input 
+    
     }
 
     renderInputGroup = (identifier, type, value, onInput) => <div>
@@ -127,7 +135,6 @@ export class AddDish extends React.Component {
 
 
     render() {
-
         const loggedIn = this.props.username !== null;
         if (!loggedIn) {
             return <LinkToHome name="the page for adding dishes" /> 
@@ -145,9 +152,8 @@ export class AddDish extends React.Component {
             
             <br />
             {this.state.successMesageVisible?
-                <Badge color="success">Dish added</Badge>: 
+                <Badge color="success" id="success-message">Dish added</Badge>: 
                 ""}
-            
         </div>
     }
 }

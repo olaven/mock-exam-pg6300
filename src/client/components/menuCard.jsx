@@ -41,7 +41,6 @@ export class MenuCard extends React.Component {
         const response = await fetch("/api/dishes/" + id)
         const dish = await response.json();
 
-        console.log("fetching");
         this.setState({
             dish
         });

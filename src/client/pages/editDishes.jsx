@@ -41,7 +41,7 @@ export class EditDishes extends React.Component {
     }
 
     renderDishes = () => this.state.dishes.map(dish => 
-        <EditDishCard onDelete={this.fetchDishes} dish={dish} key={dish.id}/>
+        <EditDishCard className="dish-card" onDelete={this.fetchDishes} dish={dish} key={dish.id}/>
     )
 
     render() {

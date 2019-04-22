@@ -16,7 +16,7 @@ const menus = new Map();
 // add the days 
 Array.from(Object.values(day)).forEach(day => {
 	menus.set(day, null);
-})
+});
 
 if (process.env.ENVIRONMENT !== "production") {
 	addDemoMenuItems(menus);

@@ -6,8 +6,6 @@ const isValid = {
 	//TODO: Move if not used in frontend
 	dish: dish => {
 
-		//{ name: 'NAME', price: 0, info: 'INFO', allergies: [] 
-		console.log("validating: ", dish);
 
 		if (
 			!dish.name ||

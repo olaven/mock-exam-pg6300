@@ -140,7 +140,7 @@ const addDemoUsers = database => {
 	demoUsers.forEach(user => {
 		database.set(user.username, user);
 	});
-}
+};
 
 module.exports = {
 	addDemoDishes, 
