@@ -89,6 +89,28 @@ const del = {
 	}
 }
 
+const post = {
+
+	dish: async (dish) => {
+
+		const payload = JSON.stringify(dish);
+
+		const response = await fetch("/api/dishes", {
+			method: "post", 
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: payload
+		}); 
+
+		if(response.status === code.CREATED) {
+			return true; 
+		} 
+
+		return false; 
+	}
+}
+
 
 const getToJson = async (path) => {
 
@@ -98,4 +120,4 @@ const getToJson = async (path) => {
 	return json;
 };
 
-export default { get, put, del }
+export default { get, put, del, post }

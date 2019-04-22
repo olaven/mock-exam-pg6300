@@ -46,7 +46,7 @@ export class EditDishCard extends React.Component {
         const price = event.target.value;
         this.setState({
             price: price,
-            buttonDisabled: isNaN(price) || price === "" || price < 0
+            buttonDisabled: isNaN(price) || price === "" || price < 1
         }); 
     }
 

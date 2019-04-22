@@ -66,10 +66,11 @@ router.post("/dishes", isAuthenticated, (req, res) => {
 
 
 	const dish = req.body;
-
+	console.log("in post: ", dish);
+	
 	const valid = isValid.dish(dish);
 	if (!valid) {
-
+		console.log("is not valid");
 		res.status(code.BAD_REQUEST).send();
 		return;
 	}

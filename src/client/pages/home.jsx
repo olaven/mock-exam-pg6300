@@ -30,6 +30,9 @@ export class Home extends React.Component {
                     <Link to={"/editDishes"}>
                         Edit dishes
                     </Link>
+                    <Link to={"/addDish"}>
+                        Add dish
+                    </Link>
                 </div>:null}
         </div>
     }

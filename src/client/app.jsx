@@ -16,6 +16,7 @@ import { Login } from "./authentication/login.jsx";
 import { Layout } from "./layout/layout.jsx";
 import { EditMenus } from "./pages/editMenus.jsx";
 import { EditDishes } from "./pages/editDishes.jsx";
+import { AddDish } from "./pages/addDish";
 
 export class App extends React.Component {
 
@@ -60,6 +61,7 @@ export class App extends React.Component {
                     {this.renderRouteWithUser("/week", Week)}
                     {this.renderRouteWithUser("/editMenus", EditMenus)}
                     {this.renderRouteWithUser("/editDishes", EditDishes)}
+                    {this.renderRouteWithUser("/addDish", AddDish)}
                     {this.renderRouteWithUser("/chat", Chat)}
                     {this.renderRouteWithUser("/signup", Signup)}
                     {this.renderRouteWithUser("/login", Login)}
