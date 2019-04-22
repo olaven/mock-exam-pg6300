@@ -22,7 +22,7 @@ export class Week extends React.Component {
 
     fetchMenus = async () => {
 
-        const menus = await fetching.menus();
+        const menus = await fetching.get.menus();
     
         this.setState({menus: menus})
     }

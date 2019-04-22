@@ -23,7 +23,7 @@ export class EditMenus extends React.Component {
 
     fetchMenus = async () => {
 
-        const menus = await fetching.menus();
+        const menus = await fetching.get.menus();
         this.setState({
             menus
         });
@@ -31,13 +31,13 @@ export class EditMenus extends React.Component {
 
     fetchDishes = async () => {
 
-        const dishes = await fetching.dishes();
+        const dishes = await fetching.get.dishes();
         this.setState({
             dishes
         });
     }
 
-    update = (dishName, menu) => {
+    update = async (dishName, menu) => {
 
         console.log("before ", menu)
         
@@ -45,6 +45,8 @@ export class EditMenus extends React.Component {
         menu.dishId = dishId;
 
         console.log("after ", menu);
+        const updated = await fetching.put.menu(menu); 
+
     }
 
     renderTableBody = () => {

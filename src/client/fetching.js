@@ -8,32 +8,57 @@
  * api-paths. 
  */
 
-const menus = async () => {
+import { code } from "../shared/http"; 
 
-	const menus = await fetchToJson("/api/menus");
-	return menus; 
+const get = {
+
+	menus: async () => {
+
+		const menus = await getToJson("/api/menus");
+		return menus;
+	}, 
+
+	menu: async () => {
+
+		const menus = await getToJson("/api/menus");
+		return menus;
+	}, 
+
+	dishes: async () => {
+
+		const dishes = await getToJson("/api/dishes/");
+		return dishes;
+	}, 
+
+	dish: async (id) => {
+
+		const dish = await getToJson("/api/dishes/" + id);
+		return dish;
+	}
 };
 
-const menu = async (day) => {
+const put = {
 
-	const menu = await fetchToJson("/api/menus/" + day); 
-	return menu;
-};
+    menu: async (menu) => {
 
-const dishes = async () => {
+        const response = await fetch("/api/menus/" + menu.day, {
+            method: "put",
+            headers: {
+                    "Content-Type": "application/json"
+                },
+            body: JSON.stringify(menu)
+        }); 
 
-	const dishes = await fetchToJson("/api/dishes");
-	return dishes;
-};
-
-const dish = async (id) => {
-
-	const dish = await fetchToJson("/api/dishes/" + id);
-	return dish;
-};
+        if (response.status === code.NO_CONTENT) {
+            return true; 
+        } 
+        return false; 
+    }
+}
 
 
-const fetchToJson = async (path) => {
+
+const getToJson = async (path) => {
 
 	const response = await fetch(path);
 	const json = await response.json();
@@ -41,9 +66,4 @@ const fetchToJson = async (path) => {
 	return json;
 };
 
-module.exports = {
-	menus, 
-	menu, 
-	dishes, 
-	dish
-};
+export default { get, put }
