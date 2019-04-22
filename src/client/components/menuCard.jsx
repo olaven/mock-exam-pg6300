@@ -3,6 +3,7 @@ import { DishCard } from "./dishCard.jsx";
 
 export class MenuCard extends React.Component {
 
+
     constructor(props) {
 
         super(props);
@@ -14,9 +15,23 @@ export class MenuCard extends React.Component {
 
     componentDidMount() {
 
+        this.mountTime = new Date().getMilliseconds();
+    }
+
+
+    shouldComponentUpdate() {
+
+        const now = new Date().getMilliseconds();
+        const timeSinceLoading = this.mountTime - now; 
+        // I do not want to fetch for null-dishes forever, as there could just be no dishes
+        return !this.state.dish && (timeSinceLoading < 500)
+    }
+
+    componentDidUpdate() {
+
         if (this.props.menu) {
-            
-            this.fetchDish();
+
+            this.fetchDish(); 
         }
     }
 
@@ -26,6 +41,7 @@ export class MenuCard extends React.Component {
         const response = await fetch("/api/dishes/" + id)
         const dish = await response.json();
 
+        console.log("fetching");
         this.setState({
             dish
         });

@@ -16,7 +16,7 @@ export class Week extends React.Component {
         };
     }
 
-    componentDidMount() {
+    componentDidMount = () => {
 
         this.fetchMenus(); 
     }
@@ -30,19 +30,24 @@ export class Week extends React.Component {
             menus.set(menu.day, menu);
         });
 
+        console.log("state is set", menus);
+
         this.setState({menus: menus})
     }
 
-    renderMenu = () => Array.from(Object.values(day)).map(
-        (day) => <MenuCard key={day} day={day} memu={this.state.menus.get(day)}/>
-    ) 
-        //this.state.menus.map((menu, index) => <MenuCard key={index} menu={menu} />)
-
     render() {
         
+        const menus = this.state.menus; 
+
         return <div id="home">
             <h1>The menu this week:</h1> 
-            {this.renderMenu()}
+            {Array.from(Object.values(day)).map(
+                (day) => {
+                    console.log(menus.get(day))
+                    return <MenuCard key={day} day={day} menu={menus.get(day)} />
+                
+                }
+            )}
         </div>
     }
 }
