@@ -59,6 +59,15 @@ export class EditDishCard extends React.Component {
         }); 
     }
 
+    updateAllergies = event => {
+
+        const options = Array.from(event.target.options);
+        const allergies = options.map(option => option.text)
+        this.setState({
+            allergies
+        });
+    }
+
     updateDish = () => {
 
         const dish = {
@@ -69,21 +78,20 @@ export class EditDishCard extends React.Component {
             allergies: this.state.allergies
         }; 
 
-       
-
         const updated = fetching.put.dish(dish); 
         if (!updated) {
             alert("an error occured when updating.."); 
         }
     }
 
-    updateAllergies = event => {
+    deleteDish = async () => {
 
-        const options = Array.from(event.target.options);
-        const allergies = options.map(option => option.text)
-        this.setState({
-            allergies
-        });
+        const deleted = fetching.del.dish(this.props.dish.id);
+        if (!deleted) {
+            alert("an error occured when deleting..");
+        } else {
+            this.props.onDelete();
+        }
     }
 
     renderInputGroup = (identifier, type, value, onInput) => <div>
@@ -121,6 +129,7 @@ export class EditDishCard extends React.Component {
                 <Button disabled color="secondary">Update</Button>: 
                 <Button color="primary" onClick={this.updateDish}>Update</Button>
             }
+            <Button color="danger" onClick={this.deleteDish}>Delete</Button> 
             <hr />
         </div>
     }

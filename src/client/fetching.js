@@ -72,6 +72,22 @@ const put = {
 	}
 }
 
+//NOTE: 'delete' is reserved
+const del = {
+
+	dish: async (id) => {
+
+		const response = await fetch("/api/dishes/" + id, {
+			method: "delete"
+		}); 
+
+		if (response.status === code.NO_CONTENT) {
+			return true 
+		}
+
+		return false; 
+	}
+}
 
 
 const getToJson = async (path) => {
@@ -82,4 +98,4 @@ const getToJson = async (path) => {
 	return json;
 };
 
-export default { get, put }
+export default { get, put, del }
