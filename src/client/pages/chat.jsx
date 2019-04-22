@@ -56,6 +56,8 @@ export class Chat extends React.Component {
 
     render() {
 
+
+        // TODO: Update if chat should be available to everyone 
         console.log("The username in component: ", this.props.username);
         const loggedIn = this.props.username !== null;
 

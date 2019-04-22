@@ -2,6 +2,7 @@ import React from "react";
 import { Table, Form } from "reactstrap";
 import fetching from "../fetching";
 import { day } from "../../shared/day";
+import { LinkToHome } from "../components/linkToHome";
 
 export class EditMenus extends React.Component {
 
@@ -46,7 +47,9 @@ export class EditMenus extends React.Component {
 
         console.log("after ", menu);
         const updated = await fetching.put.menu(menu); 
-
+        if (!updated) {
+            alert("an error occured when updating.."); 
+        }
     }
 
     renderTableBody = () => {
@@ -85,6 +88,12 @@ export class EditMenus extends React.Component {
 
     render() {
 
+        const loggedIn = this.props.username !== null; 
+
+        if (!loggedIn) {
+            return <LinkToHome />; 
+        }
+        
         return <div>
             <h1>Edit menus</h1>
             <Table>
