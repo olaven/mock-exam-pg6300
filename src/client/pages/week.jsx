@@ -44,7 +44,7 @@ export class Week extends React.Component {
             {Array.from(Object.values(day)).map(
                 (day) => {
                     console.log(menus.get(day))
-                    return <MenuCard key={day} day={day} menu={menus.get(day)} />
+                    return <MenuCard key={day} day={day} menu={menus.get(day)} className="menu-card"/>
                 
                 }
             )}

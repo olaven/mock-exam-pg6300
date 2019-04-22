@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { InputGroup, Input, InputGroupAddon, Button} from "reactstrap"
+import { InputGroup, Input, InputGroupAddon, Button, Badge} from "reactstrap"
 
 import fetching from "../fetching";
 import { LinkToHome } from "../components/linkToHome";
@@ -12,45 +12,73 @@ export class AddDish extends React.Component {
 
         super(props);
         this.state = {
-            name: "NAME",
+            name: "",
             price: 1,
-            info: "INFO",
+            info: "",
             allergies: [],
-            buttonDisabled: false
+            buttonDisabled: true, 
+            successMesageVisible: false 
         };
+    }
+
+    validateInput = () => {
+
+        if (this.state.name.trim().length === 0 ||
+            this.state.info.trim().length === 0 ||
+            isNaN(this.state.price) || this.state.price === "" || this.state.price  < 1) {
+
+                this.setState({
+                    buttonDisabled: true 
+                }); 
+            } else {
+                this.setState({
+                    buttonDisabled: false 
+                });
+            }
+    }
+
+    onSuccessfulPost = () => {
+
+        this.setState({
+            successMesageVisible: true, 
+            buttonDisabled: true, 
+            name: "",
+            price: 0, 
+            info: "" 
+        }); 
+        setTimeout(() => {
+            this.setState({
+                successMesageVisible: false
+            });
+        }, 2000);
     }
 
     updateName = event => {
 
         const name = event.target.value;
-        this.setState({
-            name: name,
-            buttonDisabled: name.trim().length === 0
-        });
+        this.setState({ name });
+        this.validateInput();
     }
 
     updatePrice = event => {
 
         const price = event.target.value;
-        this.setState({
-            price: price,
-            buttonDisabled: isNaN(price) || price === "" || price < 1
-        });
+        this.setState({ price });
+        this.validateInput(); 
     }
 
     updateInfo = event => {
 
         const info = event.target.value;
-        this.setState({
-            info: info,
-            buttonDisabled: info.trim().length === 0
-        });
+        this.setState({ info });
+        this.validateInput();
     }
 
     updateAllergies = event => {
 
         const options = Array.from(event.target.options);
-        const allergies = options.map(option => option.text)
+        const allergies = options.filter(option => option.selected).map(option => option.text)
+        console.log(options);
         this.setState({
             allergies
         });
@@ -70,6 +98,8 @@ export class AddDish extends React.Component {
         const posted = await fetching.post.dish(dish); 
         if (!posted) {
             alert("an error occured when adding..");
+        } else {
+            this.onSuccessfulPost();
         }
 
         //TODO: clear input 
@@ -78,7 +108,7 @@ export class AddDish extends React.Component {
     renderInputGroup = (identifier, type, value, onInput) => <div>
         <InputGroup>
             <InputGroupAddon addonType="prepend">{identifier}</InputGroupAddon>
-            <Input type={type} value={value} onChange={onInput} />
+            <Input id={identifier} type={type} value={value} onChange={onInput} />
         </InputGroup>
     </div>
 
@@ -87,7 +117,7 @@ export class AddDish extends React.Component {
         return <div>
             <InputGroup>
                 <InputGroupAddon addonType="prepend">allergies</InputGroupAddon>
-                <select multiple={true} onChange={this.updateAllergies}>
+                <select id="Allergies" multiple={true} onChange={this.updateAllergies}>
                     {Array.from(Object.values(allergy)).map(allergyValue =>
                         <option key={allergyValue}>{allergyValue}</option>)}
                 </select>
@@ -110,8 +140,14 @@ export class AddDish extends React.Component {
             {this.renderInputGroup("Info", "text", this.state.info, this.updateInfo)}
             {this.renderAllgergiesInput()}
             {this.state.buttonDisabled? 
-                <Button color="secondary" disabled>Add</Button>: 
-                <Button color="primary" onClick={this.postDish}>Add</Button>}
+                <Button id="add-button" color="secondary" disabled>Add</Button>: 
+                <Button id="add-button" color="primary" onClick={this.postDish}>Add</Button>}
+            
+            <br />
+            {this.state.successMesageVisible?
+                <Badge color="success">Dish added</Badge>: 
+                ""}
+            
         </div>
     }
 }
