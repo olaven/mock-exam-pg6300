@@ -86,6 +86,18 @@ const del = {
 		}
 
 		return false; 
+	},
+
+	menu: async (day) => {
+
+		const response = await fetch("/api/menus/" + day, {
+			method: "delete"
+		}); 
+
+		if (response.status === code.NO_CONTENT) {
+			return true; 
+		}
+		return false; 
 	}
 }
 

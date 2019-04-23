@@ -10,6 +10,9 @@ export class EditMenus extends React.Component {
         
         super(props);
 
+        this.noDish = {
+            name: "Nothing served this day"
+        }
         this.state = {
             menus: [], 
             dishes: []
@@ -40,18 +43,26 @@ export class EditMenus extends React.Component {
 
     update = async (dishName, menu) => {
         
-        const dishId = this.state.dishes.find(dish => dish.name === dishName).id; 
-        menu.dishId = dishId;
+        const dish = this.state.dishes.find(dish => dish.name === dishName)
+        if (!dish) {
+            await fetching.del.menu(menu.day);
+        } else {
 
-        const updated = await fetching.put.menu(menu); 
-        if (!updated) {
-            alert("an error occured when updating.."); 
+            const dishId = dish.id; 
+            menu.dishId = dishId;
+
+            const updated = await fetching.put.menu(menu);
+            if (!updated) {
+                alert("an error occured when updating..");
+            }
         }
+
+
+
+        
     }
 
     renderTableBody = () => {
-
-        
 
         const rows = this.state.menus.map(menu => <tr>
             <th>{menu.day}</th>
@@ -72,15 +83,15 @@ export class EditMenus extends React.Component {
         if (selected) {
             nameOfSelected = selected.name; 
         } else {
-            nameOfSelected = "no meal";
+            nameOfSelected = this.noDish.name;
         }
 
+        const everyOption = this.state.dishes.concat([this.noDish]);
         return <select className="edit-menu-select" onChange={(event) => {this.update(event.target.value, menu)}}>
-            {this.state.dishes.map(dish => 
+            {everyOption.map(dish => 
                 (dish.name === nameOfSelected) ? 
                     <option className="edit-menu-option" selected>{dish.name}</option> : 
                     <option className="edit-menu-option">{dish.name}</option>
-                
             )}
         </select>
     }

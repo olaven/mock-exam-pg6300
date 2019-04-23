@@ -55,7 +55,7 @@ const retrieveAll = () => {
 		} else {
 			return menu; 
 		}
-	})
+	});
 }
 	
 const retrieve = day => 
