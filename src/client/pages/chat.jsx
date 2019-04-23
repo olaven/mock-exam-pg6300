@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Button, Input } from 'reactstrap';
 
 
 export class Chat extends React.Component {
@@ -9,7 +9,9 @@ export class Chat extends React.Component {
         super(props)
         this.state = {
             input: "",
-            messages: []
+            messages: [], 
+            username: "", 
+            showChat: false 
         }
     }
 
@@ -27,6 +29,15 @@ export class Chat extends React.Component {
                 }
             );
         });
+
+        // if user is logged in, s/he should not enter username 
+        const loggedIn = this.props.username !== null;
+        if (loggedIn) {
+            this.setState({
+                username: this.props.username, 
+                showChat: true 
+            });
+        }
     }
 
     onInputChange = event => {
@@ -39,7 +50,7 @@ export class Chat extends React.Component {
         
         const payload = JSON.stringify({ 
             message: {
-                username: this.props.username,
+                username: this.state.username,
                 text: this.state.input 
             }
         });
@@ -53,31 +64,51 @@ export class Chat extends React.Component {
             <p>{message.username} - {message.text}</p>
         ); 
 
+    enterChat = event => {
+
+        const username = this.state.username;
+        console.log(username.trim().length);
+        if (username.trim().length >= 0) {
+            
+            this.setState({
+                showChat: true 
+            })
+        } else {
+            alert("invalid username.");
+        }
+    }
+
+    onUsernameInput = event => {
+
+        this.setState({
+            username: event.target.value
+        });
+    }
+
+    renderIdInput = () => <div>
+        <Input onInput={this.onUsernameInput} type="text" placeholder="chat username"/>
+        <Button onClick={this.enterChat}>Enter chat</Button> 
+    </div>
+
+    renderChat = () => <div id="chat">
+        <h1>Chat</h1>
+        <div id="messages">
+            {this.renderMessages()}
+        </div>
+        <input id="chat-input" type="text" onChange={this.onInputChange} value={this.state.input} />
+        <button id="chat-button" onClick={this.sendMessage}>Send</button>
+    </div>
+
 
     render() {
 
+        if (this.state.showChat) {
 
-        // TODO: Update if chat should be available to everyone 
-        const loggedIn = this.props.username !== null;
-
-        if (loggedIn) {
-
-            return <div id="chat">
-                <h1>Chat</h1>
-                <div id="messages">
-                    {this.renderMessages()}
-                </div>
-                <input id="chat-input" type="text" onChange={this.onInputChange} value={this.state.input} />
-                <button id="chat-button" onClick={this.sendMessage}>Send</button>
-            </div>
+            return this.renderChat(); 
         } else {
 
-            return <div>
-
-                You must <Link to={"/login"}>log in</Link> to use chat.
-            </div>
-        }
-        
+            return this.renderIdInput(); 
+        }    
     }
 }
 
