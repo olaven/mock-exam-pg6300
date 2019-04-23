@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { day } from "../../shared/day";
 import { code } from "../../shared/http";
 import fetching from "../fetching";
+import { MenuCardGQL } from "../components/menuCardGQL";
 import { MenuCard } from "../components/menuCard";
 
 
@@ -27,7 +28,6 @@ export class WeekGQL extends React.Component {
     fetchMenus = async () => {
 
         const fetchedMenus = await this.getMenusWithGraphQl()
-        console.log("menus: ", fetchedMenus);
         const menus = new Map();
 
         fetchedMenus.forEach(menu => {
@@ -103,12 +103,13 @@ export class WeekGQL extends React.Component {
             </div>
         }
         const menus = this.state.menus;
+        const days = Array.from(Object.keys(day));
         
         return <div id="home">
             <Link to="/week">Go to REST-version</Link> 
             <h1>The menu this week:</h1>
-            {Array.from(Object.values(day)).map(
-                (day) => <MenuCard key={day} day={day} menu={menus.get(day)} className="menu-card" />
+            {days.map(
+                (day) => <MenuCardGQL key={day} day={day} menu={menus.get(day)} className="menu-card" />
             )}
         </div>
     }

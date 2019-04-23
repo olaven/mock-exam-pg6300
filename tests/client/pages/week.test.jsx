@@ -9,9 +9,10 @@ const { Week } = require("../../../src/client/pages/week.jsx");
 const getWeek = (props) => {
 
 	const routerWrapper = mount(
-		<Week
-			{...props} />
-		
+		<MemoryRouter>
+			<Week
+				{...props} />
+		</MemoryRouter>
 	);
 
 	return routerWrapper.find(Week);

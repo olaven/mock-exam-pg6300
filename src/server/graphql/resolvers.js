@@ -13,7 +13,6 @@ const { allergy } = require("../../shared/allergy");
 const menus = require("../database/menus");
 const dishes = require("../database/dishes");
 
-
 module.exports = {
 
     Day: day,
