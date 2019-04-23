@@ -8,7 +8,6 @@
 - [ ] assert that no part of exercise is forgotten
 - [ ] test every feature manually 
 - [ ] test the app without internet connection
-- [ ] deploy most recent version to heroku with "git push heroku master" 
 
 ## Login 
 When running in dev mode, demo data and demo-users are added. 
@@ -21,7 +20,6 @@ To login, enter the following:
 * I have added styling with [Reactstrap](https://reactstrap.github.io). This required adding css-loaders to `webpack.config.js`. 
 * To ensure consistent code-style, I have used [ESlint](https://eslint.org). This is also configured as an extra script.
 * Although not required, I have set up Travis to automatically run tests
-* The app is deployed to [Heroku](https://exam-pg6300.herokuapp.com)
 
 ## General notes
 * Modifications to yarn scripts:

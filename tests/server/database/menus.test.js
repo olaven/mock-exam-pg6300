@@ -41,8 +41,10 @@ describe("The Menu-database", () => {
 		].forEach(menuItem => {
 			menus.persist(menuItem); 
 		}); 
-            
-		expect(menus.retrieveAll().length).toEqual(1); 
+		
+		// NOTE: all days are returned, but only one should be day.SUNDAY 
+		const sundays = menus.retrieveAll().filter(menu => menu.day === day.SUNDAY);
+		expect(sundays.length).toEqual(1);
 	});
 
 	it("can update menu", () => {

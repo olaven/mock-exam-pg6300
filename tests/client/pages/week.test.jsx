@@ -45,6 +45,7 @@ describe("the week-page.", () => {
 		}, 3000, 100);
 
 		wrapper.html()//? 
+		
 		//NOTE: assuming that tests are not run in production mode. 
 		expect(wrapper.html().includes("Nothing served this day")).toBe(false);
 	});
