@@ -10,6 +10,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Layout } from "./layout/layout.jsx";
 import { Home } from "./pages/home.jsx";
 import { Week } from "./pages/week.jsx";
+import { WeekGQL } from "./pages/weekGQL";
 import { Chat } from "./pages/chat";
 import { NotFound } from "./pages/notFound.jsx"
 import { Login } from "./pages/login.jsx";
@@ -94,6 +95,7 @@ export class App extends React.Component {
                 <Switch>
                     {this.renderRouteWithUser("/", Home)}
                     {this.renderRouteWithUser("/week", Week)}
+                    {this.renderRouteWithUser("/weekGQL", WeekGQL)}
                     {this.renderRouteWithUser("/editMenus", EditMenus)}
                     {this.renderRouteWithUser("/editDishes", EditDishes)}
                     {this.renderRouteWithUser("/addDish", AddDish)}
