@@ -9,7 +9,7 @@ const { MemoryRouter } = require("react-router-dom");
 
 const { overrideFetch, asyncCheckCondition } = require("../../mytest-utils");
 const { app } = require("../../../src/server/app");
-const { Login } = require("../../../src/client/authentication/login");
+const { Login } = require("../../../src/client/pages/login");
 const { clearUsers, createUser } = require("../../../src/server/database/users");
 
 

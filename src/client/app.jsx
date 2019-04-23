@@ -7,13 +7,12 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
+import { Layout } from "./layout/layout.jsx";
 import { Home } from "./pages/home.jsx";
 import { Week } from "./pages/week.jsx";
 import { Chat } from "./pages/chat";
 import { NotFound } from "./pages/notFound.jsx"
-import { Signup } from "./authentication/signup.jsx";
-import { Login } from "./authentication/login.jsx";
-import { Layout } from "./layout/layout.jsx";
+import { Login } from "./pages/login.jsx";
 import { EditMenus } from "./pages/editMenus.jsx";
 import { EditDishes } from "./pages/editDishes.jsx";
 import { AddDish } from "./pages/addDish";
@@ -63,7 +62,6 @@ export class App extends React.Component {
                     {this.renderRouteWithUser("/editDishes", EditDishes)}
                     {this.renderRouteWithUser("/addDish", AddDish)}
                     {this.renderRouteWithUser("/chat", Chat)}
-                    {this.renderRouteWithUser("/signup", Signup)}
                     {this.renderRouteWithUser("/login", Login)}
                     <Route component={NotFound} />
                 </Switch>

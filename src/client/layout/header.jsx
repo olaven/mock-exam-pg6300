@@ -46,7 +46,6 @@ export default class Header extends React.Component {
     renderLoggedOut = () => <div>
         <Link to={"/"}>Go home</Link>
         <Link to={"/login"}>Login</Link>
-        <Link to={"/signup"}>Sign up</Link>
     </div>
 
     render() {
