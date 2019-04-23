@@ -39,8 +39,6 @@ export class EditMenus extends React.Component {
     }
 
     update = async (dishName, menu) => {
-
-        console.log("before ", menu)
         
         const dishId = this.state.dishes.find(dish => dish.name === dishName).id; 
         menu.dishId = dishId;
@@ -76,11 +74,11 @@ export class EditMenus extends React.Component {
             nameOfSelected = "no meal";
         }
 
-        return <select onChange={(event) => {this.update(event.target.value, menu)}}>
+        return <select className="edit-menu-select" onChange={(event) => {this.update(event.target.value, menu)}}>
             {this.state.dishes.map(dish => 
                 (dish.name === nameOfSelected) ? 
-                    <option selected>{dish.name}</option> : 
-                    <option>{dish.name}</option>
+                    <option className="edit-menu-option" selected>{dish.name}</option> : 
+                    <option className="edit-menu-option">{dish.name}</option>
                 
             )}
         </select>

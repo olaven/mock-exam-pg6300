@@ -42,7 +42,7 @@ describe("the week-page.", () => {
 		await asyncCheckCondition(() => {
 			wrapper.update();
 			return !(wrapper.html().includes("Nothing served this day"));
-		}, 6000, 100);
+		}, 3000, 100);
 
 		wrapper.html()//? 
 		//NOTE: assuming that tests are not run in production mode. 

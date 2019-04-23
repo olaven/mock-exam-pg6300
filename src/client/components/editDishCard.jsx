@@ -101,7 +101,7 @@ export class EditDishCard extends React.Component {
         </InputGroup>
     </div>
 
-    renderAllgergiesInput = allergies => {
+    renderAllgergiesInput = () => {
 
         return <div>
             <InputGroup>
@@ -124,7 +124,7 @@ export class EditDishCard extends React.Component {
             {this.renderInputGroup("name", "text", this.state.name, this.updateName)}
             {this.renderInputGroup("price", "number", this.state.price, this.updatePrice)}
             {this.renderInputGroup("info", "text", this.state.info, this.updateInfo)}
-            {this.renderAllgergiesInput(this.state.allergies)}
+            {this.renderAllgergiesInput()}
             {this.state.buttonDisabled ? 
                 <Button disabled color="secondary">Update</Button>: 
                 <Button color="primary" onClick={this.updateDish}>Update</Button>

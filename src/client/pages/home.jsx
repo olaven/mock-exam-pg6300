@@ -14,7 +14,7 @@ export class Home extends React.Component {
 
 
         return <div id="home">
-            <h1>This is home</h1>
+            <h1>Cantina home page!</h1>
             <Link to={"/week"}>
                 <p className="homeMessage">Go to the week-menu.</p>
             </Link>

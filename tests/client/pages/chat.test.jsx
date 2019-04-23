@@ -75,23 +75,24 @@ describe("The chat page.", () => {
 		expect(wrapper.html().includes("id=\"chat\"")).toBe(true);
 	});
 
-	it("state updates when username is entered", () => {
-
+	it("chat is shown after user has entered valid username", async () => {
+		
 		const wrapper = getChat({ username: null });
-		const username = "updated username"; 
+		const username = "updated username";
+
+		expect(wrapper.state().username).not.toEqual(username);
 
 		const input = wrapper.find("#username-text").at(0)
 		const button = wrapper.find("#username-button").at(0)
-
 		input.simulate("change", { target: { value: username } });
 		button.simulate("click");
 
-		asyncCheckCondition(() => {
+		await asyncCheckCondition(() => {
 			wrapper.update(); 
-			return wrapper.state().username === username; 
-		});
+			return wrapper.state().showChat
+		}, 2000, 100)
 
-		expect(wrapper.state().username).toEqual(username);
+		expect(wrapper.state().showChat).toEqual(true);
 	})
 
 	it("renders chat when user has ented temporary username", () => {
@@ -99,16 +100,12 @@ describe("The chat page.", () => {
 		const wrapper = getChat({ username: null });
 		const username = "updated username";
 
+		expect(wrapper.html().includes("id=\"chat\"")).toEqual(false); 
+
 		const input = wrapper.find("#username-text").at(0)
 		const button = wrapper.find("#username-button").at(0)
-
 		input.simulate("change", { target: { value: username } });
 		button.simulate("click");
-
-		asyncCheckCondition(() => {
-			wrapper.update();
-			return wrapper.html().includes("id=\"chat\"")
-		});
 
 		expect(wrapper.html().includes("id=\"chat\"")).toEqual(true); 
 	})
