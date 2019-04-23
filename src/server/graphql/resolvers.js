@@ -25,15 +25,54 @@ module.exports = {
 			return menus.retrieveAll(); 
 		},
 		getMenuByDay: (parent, args, context, info) => {
-            return menus.retrieve(day);
-		}
-	},
+
+            return menus.retrieve(args.day);
+        },
+
+        getDishes: (parent, args, context, info) => {
+            return dishes.retrieveAll(); 
+        },
+        getDishById: (parent, args, context, info) => {
+            return dishes.retrieve(args.id);
+        }
+    },
+    
+    Menu: {
+
+        dish: (parent, args, context, info) => {
+            return dishes.retrieve(parent.dishId)
+        }
+    },
 
 	Mutation: {
-		createMenu: (parent, args, context, info) => {
-			return menus.persist({day: args.day, dishId: args.dishId});
-		}
-	},
+        
+        createMenu: (parent, args, context, info) => {
+            if (context.user) return menus.persist({ day: args.day, dishId: args.dishId });
+            return new AuthenticationError("Must log in.");
+        }, 
+        updateMenu: (parent, args, context, info) => {
+            if (context.user) return dishes.update(args.menu);
+            return new AuthenticationError("Must log in.");
+        },
+        deleteMenu: (parent, args, context, info) => {
+            if (context.user) return menus.remove(args.day)
+            return new AuthenticationError("Must log in.");
+        },
+        
+        createDish: (parent, args, context, info) => {
+            if (context.user) return menus.persist(args.day, args.dishId);
+            return new AuthenticationError("Must log in.");
+        },
+        updateDish: (parent, args, context, info) => {
+            if (context.user) return dishes.update(args.dish);
+            return new AuthenticationError("Must log in.");
+        },
+        deleteDish: (parent, args, context, info) => {
+            if (context.user) return dishes.remove(args.id)
+            return new AuthenticationError("Must log in.");
+        }
+    },
+    
 
 	/*
         When fields in the schema do not match 1-to-1 the fields in our domain models,

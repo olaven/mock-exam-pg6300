@@ -11,19 +11,28 @@ const typeDefs = gql `
     type Query{
         
         authenticationError: String
-        
-        getMenus: [Menu]
     
+        getMenus: [Menu]
         getMenuByDay(day: Day!) : Menu
+        
+        getDishes: [Dish]
+        getDishById(id: String!): Dish 
     }
 
     type Mutation {
+
         createMenu(day: Day!, dishId: String!): Day
+        updateMenu(day: Day!, dishId: String!): Menu!
+        deleteMenu(day: Day!): Boolean!
+    
+        createDish(name: String!, info: String!, price: Int!, allergies: [Allergy]): String!
+        updateDish(name: String!, info: String!, price: Int!, allergies: [Allergy]): Dish!
+        deleteDish(id: String!): Boolean!
     }
 
     type Menu {
         day: Day
-        dishId: String
+        dish: Dish 
     }
 
     type Dish {

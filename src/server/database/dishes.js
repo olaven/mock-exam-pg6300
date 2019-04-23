@@ -32,11 +32,16 @@ const update = (dish) => {
 	if (!old) throw "cannot update dish that doesn't exist";
     
 	dishes.set(dish.id, dish);
+	return dish;
 };
 
 const remove = (id) => {
 
+	if (!dishes.get(id)) {
+		return false 
+	}
 	dishes.delete(id);
+	return true; 
 };
 
 const clear = () => {

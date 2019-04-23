@@ -64,11 +64,16 @@ const retrieve = day =>
 const update = (menuItem) => {
 
 	menus.set(menuItem.day, menuItem);
+	return menuItem;
 };
 
 const remove = day => {
 
+	if(!menus.get(day)) {
+		return false; 
+	}
 	menus.delete(day);
+	return true; 
 };
 
 const clear = () => {
