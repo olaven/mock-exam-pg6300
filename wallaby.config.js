@@ -1,22 +1,24 @@
 module.exports = function (wallaby) {
 
 	return {
-		files: ["src/**/*.js?(x)", "package.json", "tests/**/*.js", "!tests/**/*-test.js?(x)"],
+		files: ['src/**/*.js?(x)', 'package.json', 'tests/**/*.js', '!tests/**/*-test.js?(x)'],
 
-		tests: ["tests/**/*.test.js?(x)"],
-
+		tests: ['tests/**/*-test.js?(x)'],
 
 		env: {
-			type: "node",
-			runner: "node"
+			type: 'node',
+			runner: 'node',
+			params: {
+				env: 'ENVIRONMENT=development'
+			}
 		},
 
-		testFramework: "jest",
+		testFramework: 'jest',
 
-		filesWithNoCoverageCalculated: ["tests/**/*.js", "src/server.js"],
+		filesWithNoCoverageCalculated: ['tests/**/*.js', 'src/server/server.js', 'src/client/index.jsx'],
 
 		compilers: {
-			"**/*.js?(x)": wallaby.compilers.babel()
+			'**/*.js?(x)': wallaby.compilers.babel()
 		}
 	};
 };
