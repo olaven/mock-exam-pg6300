@@ -85,9 +85,9 @@ export class Chat extends React.Component {
         });
     }
 
-    renderIdInput = () => <div>
-        <Input onInput={this.onUsernameInput} type="text" placeholder="chat username"/>
-        <Button onClick={this.enterChat}>Enter chat</Button> 
+    renderIdInput = () => <div id="chat-id-input">
+        <Input onInput={this.onUsernameInput} id="username-text" type="text" placeholder="What should people cal you?"/>
+        <Button onClick={this.enterChat} id="username-button">Enter chat</Button> 
     </div>
 
     renderChat = () => <div id="chat">

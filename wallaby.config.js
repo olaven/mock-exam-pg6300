@@ -13,8 +13,6 @@ module.exports = function (wallaby) {
 
 		testFramework: "jest",
 
-		filesWithNoCoverageCalculated: ["tests/**/*.js", "src/server.js"],
-
 		compilers: {
 			"**/*.js?(x)": wallaby.compilers.babel()
 		}

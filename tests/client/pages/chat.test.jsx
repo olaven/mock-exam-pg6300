@@ -4,16 +4,18 @@ const { MemoryRouter } = require("react-router-dom");
 
 const { app } = require("../../../src/server/app");
 const { Chat } = require("../../../src/client/pages/chat.jsx");
-const { overrideWebSocket, overrideFetch } = require("../../mytest-utils");
+const { overrideWebSocket, overrideFetch, asyncCheckCondition} = require("../../mytest-utils");
 
 const getChat = (props) => {
 
-	return mount(
+	const routerWrapper = mount(
 		<MemoryRouter>
 			<Chat
 				{...props} />
 		</MemoryRouter>
 	);
+
+	return routerWrapper.find(Chat);
 };
 
 const sendMessage = (wrapper, message) => {
@@ -55,11 +57,17 @@ describe("The chat page.", () => {
 		expect(chat).not.toBeUndefined();
 	});
 
-	it("is not avaialble when not logged in", () => {
+	it("chat does not display (initially) when user is logged out", () => {
 
 		const wrapper = getChat({ username: null});
 		expect(wrapper.html().includes("id=\"chat\"")).toBe(false);
 	});
+
+	it("asks for username of logged out user", () => {
+
+		const wrapper = getChat({ username: null }); 
+		expect(wrapper.html().includes("id=\"chat-id-input\"")).toBe(true);
+	})
 
 	it("shows chat-input when user is logged in", () => {
 
@@ -67,6 +75,43 @@ describe("The chat page.", () => {
 		expect(wrapper.html().includes("id=\"chat\"")).toBe(true);
 	});
 
+	it("state updates when username is entered", () => {
+
+		const wrapper = getChat({ username: null });
+		const username = "updated username"; 
+
+		const input = wrapper.find("#username-text").at(0)
+		const button = wrapper.find("#username-button").at(0)
+
+		input.simulate("change", { target: { value: username } });
+		button.simulate("click");
+
+		asyncCheckCondition(() => {
+			wrapper.update(); 
+			return wrapper.state().username === username; 
+		});
+
+		expect(wrapper.state().username).toEqual(username);
+	})
+
+	it("renders chat when user has ented temporary username", () => {
+
+		const wrapper = getChat({ username: null });
+		const username = "updated username";
+
+		const input = wrapper.find("#username-text").at(0)
+		const button = wrapper.find("#username-button").at(0)
+
+		input.simulate("change", { target: { value: username } });
+		button.simulate("click");
+
+		asyncCheckCondition(() => {
+			wrapper.update();
+			return wrapper.html().includes("id=\"chat\"")
+		});
+
+		expect(wrapper.html().includes("id=\"chat\"")).toEqual(true); 
+	})
 	// it("shows sent message", async () => {
 
 	// 	const message = "This is an important message!";
