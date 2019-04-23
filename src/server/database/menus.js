@@ -40,8 +40,23 @@ const persist = (menuItem) => {
 	return menuItem.day;
 };
 
-const retrieveAll = () => 
-	Array.from(menus.values());
+const retrieveAll = () => {
+
+	const days = Object.values(day);
+
+	return days.map(d => {
+		
+		const menu = menus.get(d)
+		if (!menu) {
+			return {
+				dishId: null, 
+				day: d 
+			}
+		} else {
+			return menu; 
+		}
+	})
+}
 	
 const retrieve = day => 
 	menus.get(day); 

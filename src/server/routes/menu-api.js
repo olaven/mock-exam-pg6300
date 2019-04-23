@@ -33,8 +33,12 @@ router.get("/menus/:day", (req, res) => {
     served on a given day.
     */
 	if (!menuItem) {
-        
-		res.status(code.OK).send(null); 
+		
+		console.log("sending null menu");
+		res.status(code.OK).send({
+			dishId: null,
+			day: day
+		});
 	} else {
         
 		res.status(code.OK).send(menuItem);

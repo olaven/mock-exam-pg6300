@@ -5,6 +5,13 @@ let users = new Map();
 
 if (process.env.ENVIRONMENT !== "production") {
 	addDemoUsers(users);
+} else {
+
+	//adding 
+	users.set("admin chef", {
+		username: "admin chef", 
+		password: "kittens"
+	}); 
 }
 
 const getUser = (username) => {

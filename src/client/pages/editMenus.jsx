@@ -58,7 +58,8 @@ export class EditMenus extends React.Component {
             <td>
                 {this.renderSelect(menu)}
             </td>
-        </tr>)
+        </tr>);
+
         return <tbody>
             {rows}
         </tbody>
@@ -85,6 +86,9 @@ export class EditMenus extends React.Component {
     }
 
     render() {
+
+        console.log(this.state.dishes)
+        console.log(this.state.menus);
 
         const loggedIn = this.props.username !== null; 
 
