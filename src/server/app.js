@@ -18,7 +18,7 @@ app.use(express.static("public"));
 
 configure.authentication();
 configure.websocket();
-//configure.graphql(); //TODO: FIX graphQL-api 
+configure.graphql();
 configure.rest();
 
 //If 404 -> just return index

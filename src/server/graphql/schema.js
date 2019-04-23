@@ -3,44 +3,53 @@
 //  * https://github.com/arcuri82/web_development_and_api_design/blob/ad18f9a63c5b62316abaf0644072434e02860d7b/les11/forum/src/server/schema.js
 //  */
 
-// const { gql } = require("apollo-server-express");
+const { gql } = require("apollo-server-express");
 
-
-// /*
-//     gql`...` is a tagged template literal, where we define the schema as
-//     multi-line string. This string is validated for syntactic correctness.
-
-//     Note that the types are "nullable" by default.
-//     To specify that a value MUST be present, you need to use a "!".
-//  */
-
-// const typeDefs = gql `
+const typeDefs = gql `
     
 
-//     type Query{
+    type Query{
         
-//         authenticationError: String
+        authenticationError: String
         
-//         #Get all the news
-//         getData: [Data]
-        
-//         #Get a single data entry, specified by id
-//         getDataById(id: Int!) : Data
+        getMenus: [Menu]
+    
+        getMenuByDay(day: Day!) : Menu
+    }
 
-//         #Get data entry by wether they are checked or not 
-//         getDataByChecked(checked: Boolean!): [Data]
-//     }
+    type Mutation {
+        createMenu(day: Day!, dishId: String!): Day
+    }
 
-//     type Mutation {
-//         createData(id: Int!, message: String!, checked: Boolean!): String
-//     }
+    type Menu {
+        day: Day
+        dishId: String
+    }
 
+    type Dish {
+        name: String! 
+        info: String!
+        price: Int! 
+        allergies: [Allergy]
+    }
 
-//     type Data {
-//         id: Int
-//         message: String
-//         checked: Boolean
-//     }
-// `;
+    enum Day {
+        MONDAY
+        TUESDAY
+        WEDNESDAY
+        THURSDAY
+        FRIDAY
+        SATURDAY
+        SUNDAY
+    }
 
-// module.exports = typeDefs;
+    enum Allergy {
+        NUTS
+        FISH
+        DAIRY
+        SOY
+        GLUTEN
+    }
+`;
+
+module.exports = typeDefs;
