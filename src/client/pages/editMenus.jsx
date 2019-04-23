@@ -45,7 +45,10 @@ export class EditMenus extends React.Component {
         
         const dish = this.state.dishes.find(dish => dish.name === dishName)
         if (!dish) {
-            await fetching.del.menu(menu.day);
+            const deleted = await fetching.del.menu(menu.day);
+            if (!deleted) {
+                alert("some error when deleting..");
+            }
         } else {
 
             const dishId = dish.id; 
@@ -97,7 +100,7 @@ export class EditMenus extends React.Component {
     }
 
     render() {
-        
+
         const loggedIn = this.props.username !== null; 
 
         if (!loggedIn) {

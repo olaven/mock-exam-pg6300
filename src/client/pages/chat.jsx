@@ -41,6 +41,11 @@ export class Chat extends React.Component {
         }
     }
 
+    componentWillUnmount() {
+
+        this.socket.close();
+    }
+
     onInputChange = event => {
         
         const input = event.target.value; 
